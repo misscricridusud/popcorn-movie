@@ -10,142 +10,277 @@ body { background: #0a0a0a; color: #fff; font-family: 'Segoe UI', sans-serif; }
 input { color: #fff; font-family: inherit; }
 input::placeholder { color: #555; }
 .row { display: flex; flex-wrap: nowrap; overflow-x: scroll; -webkit-overflow-scrolling: touch; gap: 12px; padding: 4px 18px 12px; }
-.genre-tabs { display: flex; flex-wrap: nowrap; overflow-x: scroll; -webkit-overflow-scrolling: touch; gap: 8px; padding: 0 0 12px; }
-.poster-wrap { flex: 0 0 auto; width: 110px; cursor: pointer; }
-.poster-img { width: 110px; height: 155px; border-radius: 12px; object-fit: cover; display: block; margin-bottom: 7px; box-shadow: 0 4px 16px rgba(0,0,0,0.5); }
-.poster-placeholder { width: 110px; height: 155px; border-radius: 12px; margin-bottom: 7px; display: flex; align-items: center; justify-content: center; font-size: 36px; border: 1px solid #222; }
-.film-title { font-size: 11px; font-weight: 700; color: #ddd; line-height: 1.3; }
-.film-year { font-size: 10px; color: #555; margin-top: 2px; }
+.tabs { display: flex; flex-wrap: nowrap; overflow-x: scroll; -webkit-overflow-scrolling: touch; gap: 8px; padding: 0 0 12px; }
+.pw { flex: 0 0 auto; width: 110px; cursor: pointer; }
+.pi { width: 110px; height: 155px; border-radius: 12px; object-fit: cover; display: block; margin-bottom: 7px; box-shadow: 0 4px 16px rgba(0,0,0,0.5); }
+.pp { width: 110px; height: 155px; border-radius: 12px; margin-bottom: 7px; display: flex; align-items: center; justify-content: center; font-size: 36px; border: 1px solid #222; }
+.ft { font-size: 11px; font-weight: 700; color: #ddd; line-height: 1.3; }
+.fy { font-size: 10px; color: #555; margin-top: 2px; }
 @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
 @keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
-.shimmer { background: linear-gradient(90deg,#1a1a1a 25%,#2a2a2a 50%,#1a1a1a 75%); background-size:400px 100%; animation:shimmer 1.2s infinite; border-radius:12px; }
+.sh { background: linear-gradient(90deg,#1a1a1a 25%,#2a2a2a 50%,#1a1a1a 75%); background-size:400px 100%; animation:shimmer 1.2s infinite; border-radius:12px; }
 </style>
 </head>
 <body>
-<div id="root" style="max-width:420px;margin:0 auto;min-height:100vh;background:#0a0a0a;position:relative;"></div>
+<div id="root" style="max-width:430px;margin:0 auto;min-height:100vh;background:#0a0a0a;"></div>
 <script>
 const TMDB_KEY = "20f7a2ae5efdfe1ccb8d32562ccce2b5";
-const IMG_BASE = "https://image.tmdb.org/t/p/w200";
+const IMG = "https://image.tmdb.org/t/p/w200";
 
+// ── FILMS PAR DÉCENNIE ────────────────────────────────────────────────────────
 const MOVIES = [
-  {id:1,title:"Die Hard",year:1988,genre:"Action",rating:8.2,tmdb:562,desc:"Un policier seul contre des terroristes dans un gratte-ciel."},
-  {id:2,title:"Mad Max: Fury Road",year:2015,genre:"Action",rating:8.1,tmdb:76341,desc:"Course-poursuite épique dans un désert post-apocalyptique."},
-  {id:3,title:"The Dark Knight",year:2008,genre:"Action",rating:9.0,tmdb:155,desc:"Batman affronte le Joker dans une bataille pour Gotham."},
-  {id:4,title:"John Wick",year:2014,genre:"Action",rating:7.4,tmdb:245891,desc:"Un tueur à gages sort de sa retraite pour se venger."},
-  {id:5,title:"Top Gun: Maverick",year:2022,genre:"Action",rating:8.3,tmdb:361743,desc:"Maverick repousse ses limites lors d'une mission suicide."},
-  {id:6,title:"Rocky",year:1976,genre:"Action",rating:8.1,tmdb:1367,desc:"Un boxeur sans avenir rêve de devenir champion du monde."},
-  {id:7,title:"Rambo",year:1982,genre:"Action",rating:7.7,tmdb:1368,desc:"Un vétéran du Vietnam traqué par la police."},
-  {id:8,title:"Mission Impossible",year:1996,genre:"Action",rating:7.1,tmdb:954,desc:"Un agent secret doit démasquer une taupe."},
-  {id:9,title:"Shawshank Redemption",year:1994,genre:"Drame",rating:9.3,tmdb:278,desc:"Un homme innocent survit grâce à l'espoir en prison."},
-  {id:10,title:"Forrest Gump",year:1994,genre:"Drame",rating:8.8,tmdb:13,desc:"Un homme simple traverse l'histoire américaine."},
-  {id:11,title:"Good Will Hunting",year:1997,genre:"Drame",rating:8.3,tmdb:489,desc:"Un génie des maths refuse de s'ouvrir au monde."},
-  {id:12,title:"Whiplash",year:2014,genre:"Drame",rating:8.5,tmdb:244786,desc:"Un jeune batteur sous l'emprise d'un professeur tyrannique."},
-  {id:13,title:"The Godfather",year:1972,genre:"Drame",rating:9.2,tmdb:238,desc:"La saga d'une famille mafieuse new-yorkaise."},
-  {id:14,title:"Chinatown",year:1974,genre:"Drame",rating:8.2,tmdb:1930,desc:"Un détective plonge dans la corruption de L.A."},
-  {id:15,title:"Kramer vs Kramer",year:1979,genre:"Drame",rating:7.8,tmdb:9443,desc:"Un père apprend à élever seul son fils."},
-  {id:16,title:"Se7en",year:1995,genre:"Thriller",rating:8.6,tmdb:807,desc:"Deux détectives traquent un tueur en série démoniaque."},
-  {id:17,title:"Silence of the Lambs",year:1991,genre:"Thriller",rating:8.6,tmdb:539,desc:"Une agente du FBI consulte Hannibal Lecter."},
-  {id:18,title:"Gone Girl",year:2014,genre:"Thriller",rating:8.1,tmdb:210577,desc:"La disparition d'une femme révèle de sombres secrets."},
-  {id:19,title:"Prisoners",year:2013,genre:"Thriller",rating:8.1,tmdb:146233,desc:"Un père désespéré cherche sa fille kidnappée."},
-  {id:20,title:"All the President's Men",year:1976,genre:"Thriller",rating:8.0,tmdb:8947,desc:"Deux journalistes enquêtent sur le Watergate."},
-  {id:21,title:"The Shining",year:1980,genre:"Horreur",rating:8.4,tmdb:694,desc:"Un écrivain sombre dans la folie dans un hôtel isolé."},
-  {id:22,title:"Get Out",year:2017,genre:"Horreur",rating:7.7,tmdb:419430,desc:"Un homme découvre les horreurs de la famille de sa petite amie."},
-  {id:23,title:"Hereditary",year:2018,genre:"Horreur",rating:7.3,tmdb:493922,desc:"Une famille hantée par un sombre héritage occulte."},
-  {id:24,title:"A Quiet Place",year:2018,genre:"Horreur",rating:7.5,tmdb:447332,desc:"Une famille survit à des créatures chassant au son."},
-  {id:25,title:"Halloween",year:1978,genre:"Horreur",rating:7.7,tmdb:948,desc:"Michael Myers terrorise une petite ville américaine."},
-  {id:26,title:"Nightmare on Elm Street",year:1984,genre:"Horreur",rating:7.5,tmdb:557,desc:"Freddy Krueger tue les adolescents dans leurs rêves."},
-  {id:27,title:"Inception",year:2010,genre:"Fantastique",rating:8.8,tmdb:27205,desc:"Un voleur de rêves accepte une mission impossible."},
-  {id:28,title:"Interstellar",year:2014,genre:"Fantastique",rating:8.7,tmdb:157336,desc:"Des astronautes traversent un trou de ver pour sauver l'humanité."},
-  {id:29,title:"The Matrix",year:1999,genre:"Fantastique",rating:8.7,tmdb:603,desc:"Un hacker découvre que la réalité est une simulation."},
-  {id:30,title:"2001 Space Odyssey",year:1968,genre:"Fantastique",rating:8.3,tmdb:62,desc:"Un voyage spatial révèle les origines de l'humanité."},
-  {id:31,title:"E.T.",year:1982,genre:"Fantastique",rating:7.9,tmdb:601,desc:"Un enfant cache un extraterrestre perdu sur Terre."},
-  {id:32,title:"Close Encounters",year:1977,genre:"Fantastique",rating:7.6,tmdb:840,desc:"Un homme obsédé par un contact extraterrestre."},
-  {id:33,title:"Grand Budapest Hotel",year:2014,genre:"Comedie",rating:8.1,tmdb:120467,desc:"Les aventures d'un concierge d'hôtel légendaire."},
-  {id:34,title:"Groundhog Day",year:1993,genre:"Comedie",rating:8.0,tmdb:1408,desc:"Un journaliste revit la même journée en boucle."},
-  {id:35,title:"Blazing Saddles",year:1974,genre:"Comedie",rating:7.7,tmdb:8012,desc:"Un shérif noir dans une ville raciste de l'Ouest."},
-  {id:36,title:"Annie Hall",year:1977,genre:"Comedie",rating:8.0,tmdb:703,desc:"Une histoire d'amour new-yorkaise en flashbacks."},
-  {id:37,title:"Superbad",year:2007,genre:"Comedie",rating:7.6,tmdb:8363,desc:"Deux lycéens vivent une dernière nuit épique."},
-  {id:38,title:"Knives Out",year:2019,genre:"Comedie",rating:7.9,tmdb:546554,desc:"Un détective démêle un mystère familial tordu."},
-  {id:39,title:"Blade Runner 2049",year:2017,genre:"Sci-Fi",rating:8.0,tmdb:335984,desc:"Un blade runner découvre un secret qui pourrait tout changer."},
-  {id:40,title:"Arrival",year:2016,genre:"Sci-Fi",rating:7.9,tmdb:329865,desc:"Une linguiste tente de communiquer avec des extraterrestres."},
-  {id:41,title:"Star Wars",year:1977,genre:"Sci-Fi",rating:8.6,tmdb:11,desc:"Un jeune fermier combat l'Empire galactique."},
-  {id:42,title:"Alien",year:1979,genre:"Sci-Fi",rating:8.5,tmdb:348,desc:"L'équipage d'un vaisseau affronte une créature mortelle."},
-  {id:43,title:"Terminator 2",year:1991,genre:"Sci-Fi",rating:8.6,tmdb:280,desc:"Un Terminator protège John Connor."},
-  {id:44,title:"Apocalypse Now",year:1979,genre:"Guerre",rating:8.4,tmdb:1579,desc:"Un capitaine remonte le fleuve pour éliminer un colonel renégat."},
-  {id:45,title:"Full Metal Jacket",year:1987,genre:"Guerre",rating:8.3,tmdb:600,desc:"Des recrues traversent l'entraînement brutal des Marines."},
-  {id:46,title:"Platoon",year:1986,genre:"Guerre",rating:8.1,tmdb:1283,desc:"Un soldat déchiré entre deux sergents opposés au Vietnam."},
-  {id:47,title:"Saving Private Ryan",year:1998,genre:"Guerre",rating:8.6,tmdb:857,desc:"Des soldats cherchent à sauver un para après le Débarquement."},
-  {id:48,title:"The Deer Hunter",year:1978,genre:"Guerre",rating:8.1,tmdb:745,desc:"Des amis voient leur vie brisée par la guerre du Vietnam."},
+  // ── ANNÉES 70 ──
+  {id:1,  title:"The Godfather",           year:1972,genre:"Drame",    rating:9.2,tmdb:238,   desc:"La saga d'une famille mafieuse new-yorkaise."},
+  {id:2,  title:"The Exorcist",            year:1973,genre:"Horreur",  rating:8.1,tmdb:9552,  desc:"Une petite fille est possédée par un démon."},
+  {id:3,  title:"Chinatown",               year:1974,genre:"Thriller", rating:8.2,tmdb:1930,  desc:"Un détective plonge dans la corruption de L.A."},
+  {id:4,  title:"Jaws",                    year:1975,genre:"Horreur",  rating:8.0,tmdb:578,   desc:"Un grand blanc terrorise une ville côtière."},
+  {id:5,  title:"Rocky",                   year:1976,genre:"Action",   rating:8.1,tmdb:1367,  desc:"Un boxeur sans avenir rêve de devenir champion."},
+  {id:6,  title:"Taxi Driver",             year:1976,genre:"Thriller", rating:8.2,tmdb:103,   desc:"Un chauffeur de taxi instable devient justicier."},
+  {id:7,  title:"Star Wars",               year:1977,genre:"Sci-Fi",   rating:8.6,tmdb:11,    desc:"Un jeune fermier combat l'Empire galactique."},
+  {id:8,  title:"Annie Hall",              year:1977,genre:"Comedie",  rating:8.0,tmdb:703,   desc:"Une histoire d'amour new-yorkaise en flashbacks."},
+  {id:9,  title:"Close Encounters",        year:1977,genre:"Fantastique",rating:7.6,tmdb:840, desc:"Un homme obsédé par un contact extraterrestre."},
+  {id:10, title:"The Deer Hunter",         year:1978,genre:"Guerre",   rating:8.1,tmdb:745,   desc:"Des amis voient leur vie brisée par le Vietnam."},
+  {id:11, title:"Halloween",               year:1978,genre:"Horreur",  rating:7.7,tmdb:948,   desc:"Michael Myers terrorise une petite ville."},
+  {id:12, title:"Apocalypse Now",          year:1979,genre:"Guerre",   rating:8.4,tmdb:1579,  desc:"Un capitaine remonte le fleuve pour éliminer un colonel."},
+  {id:13, title:"Alien",                   year:1979,genre:"Sci-Fi",   rating:8.5,tmdb:348,   desc:"L'équipage d'un vaisseau affronte une créature mortelle."},
+  {id:14, title:"Kramer vs Kramer",        year:1979,genre:"Drame",    rating:7.8,tmdb:9443,  desc:"Un père apprend à élever seul son fils."},
+  {id:15, title:"All the President's Men", year:1976,genre:"Thriller", rating:8.0,tmdb:8947,  desc:"Deux journalistes enquêtent sur le Watergate."},
+  {id:131,title:"The French Connection",   year:1971,genre:"Thriller", rating:7.7,tmdb:8012,  desc:"Un flic new-yorkais obsessionnel traque un réseau de trafic de drogue."},
+  {id:132,title:"Dirty Harry",             year:1971,genre:"Action",   rating:7.7,tmdb:4806,  desc:"L'inspecteur Harry pourchasse un tueur en série à San Francisco."},
+  {id:133,title:"Deliverance",             year:1972,genre:"Thriller", rating:7.7,tmdb:9426,  desc:"Quatre amis vivent un voyage en canoë qui tourne au cauchemar."},
+  {id:134,title:"Serpico",                 year:1973,genre:"Action",   rating:7.7,tmdb:4550,  desc:"Un policier honnête lutte seul contre la corruption de la NYPD."},
+  {id:135,title:"American Graffiti",       year:1973,genre:"Comedie",  rating:7.4,tmdb:1907,  desc:"Une nuit dans la vie d'adolescents californiens en 1962."},
+  {id:136,title:"Dog Day Afternoon",       year:1975,genre:"Thriller", rating:8.0,tmdb:1640,  desc:"Un hold-up qui dérape devient un événement médiatique."},
+  {id:137,title:"Marathon Man",            year:1976,genre:"Thriller", rating:7.5,tmdb:8959,  desc:"Un étudiant est mêlé à une affaire d'espionnage et de diamants nazis."},
+  {id:138,title:"Network",                 year:1976,genre:"Drame",    rating:8.1,tmdb:9368,  desc:"Un présentateur de télé pète les plombs en direct et devient une star."},
+  {id:139,title:"Smokey and the Bandit",   year:1977,genre:"Action",   rating:7.0,tmdb:10539, desc:"Un chauffeur hors-la-loi fait la course contre le shérif."},
+  {id:140,title:"Superman",               year:1978,genre:"Action",   rating:7.3,tmdb:1924,  desc:"Un alien aux super-pouvoirs protège la Terre sous l'identité de Clark Kent."},
+  {id:141,title:"Animal House",            year:1978,genre:"Comedie",  rating:7.5,tmdb:10921, desc:"Une fraternité de bras cassés sème le chaos dans leur université."},
+  {id:142,title:"Grease",                  year:1978,genre:"Comedie",  rating:7.2,tmdb:621,   desc:"Une histoire d'amour sur fond de rock'n'roll dans un lycée des années 50."},
+  {id:143,title:"Midnight Express",        year:1978,genre:"Drame",    rating:8.0,tmdb:10119, desc:"Un jeune Américain est emprisonné en Turquie pour trafic de drogue."},
+  {id:144,title:"Manhattan",               year:1979,genre:"Comedie",  rating:7.9,tmdb:16074, desc:"Un scénariste new-yorkais jongle entre amours et névroses à Manhattan."},
+
+  // ── ANNÉES 80 ──
+  {id:16, title:"The Shining",             year:1980,genre:"Horreur",  rating:8.4,tmdb:694,   desc:"Un écrivain sombre dans la folie dans un hôtel isolé."},
+  {id:17, title:"Raging Bull",             year:1980,genre:"Drame",    rating:8.2,tmdb:4436,  desc:"La vie tourmentée du boxeur Jake LaMotta."},
+  {id:18, title:"Raiders of the Lost Ark", year:1981,genre:"Action",   rating:8.4,tmdb:85,    desc:"Indiana Jones part à la recherche de l'Arche d'Alliance."},
+  {id:19, title:"E.T.",                    year:1982,genre:"Fantastique",rating:7.9,tmdb:601,  desc:"Un enfant cache un extraterrestre perdu sur Terre."},
+  {id:20, title:"Blade Runner",            year:1982,genre:"Sci-Fi",   rating:8.1,tmdb:78,    desc:"Un chasseur traque des androïdes rebelles dans un futur sombre."},
+  {id:21, title:"Rambo",                   year:1982,genre:"Action",   rating:7.7,tmdb:1368,  desc:"Un vétéran du Vietnam traqué par la police."},
+  {id:22, title:"Scarface",                year:1983,genre:"Action",   rating:8.3,tmdb:111,   desc:"Un immigré cubain monte jusqu'au sommet du crime."},
+  {id:23, title:"Ghostbusters",            year:1984,genre:"Comedie",  rating:7.8,tmdb:620,   desc:"Trois scientifiques chassent les fantômes à New York."},
+  {id:24, title:"Terminator",              year:1984,genre:"Sci-Fi",   rating:8.1,tmdb:218,   desc:"Un robot du futur est envoyé pour tuer Sarah Connor."},
+  {id:25, title:"Nightmare on Elm Street", year:1984,genre:"Horreur",  rating:7.5,tmdb:557,   desc:"Freddy Krueger tue les adolescents dans leurs rêves."},
+  {id:26, title:"Back to the Future",      year:1985,genre:"Comedie",  rating:8.5,tmdb:105,   desc:"Un ado voyage dans le passé avec une DeLorean."},
+  {id:27, title:"Platoon",                 year:1986,genre:"Guerre",   rating:8.1,tmdb:1283,  desc:"Un soldat déchiré entre deux sergents au Vietnam."},
+  {id:28, title:"Full Metal Jacket",       year:1987,genre:"Guerre",   rating:8.3,tmdb:600,   desc:"Des recrues traversent l'entraînement brutal des Marines."},
+  {id:29, title:"Die Hard",                year:1988,genre:"Action",   rating:8.2,tmdb:562,   desc:"Un policier seul contre des terroristes dans un gratte-ciel."},
+  {id:30, title:"Rain Man",                year:1988,genre:"Drame",    rating:8.0,tmdb:380,   desc:"Un homme découvre son frère autiste et entreprend un road-trip."},
+  {id:31, title:"Batman",                  year:1989,genre:"Action",   rating:7.5,tmdb:268,   desc:"Le chevalier noir affronte le Joker à Gotham City."},
+  {id:32, title:"When Harry Met Sally",    year:1989,genre:"Comedie",  rating:7.7,tmdb:639,   desc:"Deux amis débattent si hommes et femmes peuvent être juste amis."},
+  {id:146,title:"The Elephant Man",        year:1980,genre:"Drame",    rating:8.2,tmdb:1574,  desc:"Un homme difforme au XIXe siècle cherche à être accepté par la société."},
+  {id:147,title:"Blues Brothers",          year:1980,genre:"Comedie",  rating:7.9,tmdb:8195,  desc:"Deux frères rassemblent un groupe de jazz pour sauver leur orphelinat."},
+  {id:148,title:"Airplane!",               year:1980,genre:"Comedie",  rating:7.7,tmdb:3087,  desc:"Une parodie hilarante des films catastrophe aériens."},
+  {id:149,title:"The Empire Strikes Back", year:1980,genre:"Sci-Fi",   rating:8.7,tmdb:1891,  desc:"Luke Skywalker s'entraîne avec Yoda pendant que ses amis sont poursuivis."},
+  {id:150,title:"Escape from New York",    year:1981,genre:"Sci-Fi",   rating:7.2,tmdb:1103,  desc:"En 1997, Manhattan est une prison géante où un héros doit sauver le président."},
+  {id:151,title:"An American Werewolf",    year:1981,genre:"Horreur",  rating:7.5,tmdb:11443, desc:"Un touriste américain est mordu par un loup-garou en Angleterre."},
+  {id:152,title:"Tootsie",                 year:1982,genre:"Comedie",  rating:7.4,tmdb:9654,  desc:"Un acteur raté se travestit en femme pour décrocher un rôle à la télé."},
+  {id:153,title:"Poltergeist",             year:1982,genre:"Horreur",  rating:7.3,tmdb:2810,  desc:"Une famille est terrorisée par des esprits qui ont enlevé leur petite fille."},
+  {id:154,title:"The Thing",               year:1982,genre:"Horreur",  rating:8.2,tmdb:1091,  desc:"Une créature extraterrestre prend l'apparence des membres d'une station polaire."},
+  {id:155,title:"Return of the Jedi",      year:1983,genre:"Sci-Fi",   rating:8.3,tmdb:1892,  desc:"Les rebelles affrontent l'Empire pour la bataille finale."},
+  {id:156,title:"Flashdance",              year:1983,genre:"Drame",    rating:6.0,tmdb:11062, desc:"Une soudeuse rêve de devenir danseuse professionnelle."},
+  {id:157,title:"WarGames",                year:1983,genre:"Sci-Fi",   rating:7.1,tmdb:10070, desc:"Un adolescent hacke un ordinateur militaire et manque de déclencher une guerre."},
+  {id:158,title:"Gremlins",                year:1984,genre:"Comedie",  rating:7.7,tmdb:927,   desc:"Un animal mignon se transforme en créatures malveillantes."},
+  {id:159,title:"Indiana Jones Temple",    year:1984,genre:"Action",   rating:7.5,tmdb:87,    desc:"Indiana Jones sauve des enfants esclaves dans un temple maudit en Inde."},
+  {id:160,title:"Amadeus",                 year:1984,genre:"Drame",    rating:8.4,tmdb:795,   desc:"La rivalité jalouse entre Mozart et Salieri dans la Vienne du XVIIIe siècle."},
+  {id:161,title:"Splash",                  year:1984,genre:"Comedie",  rating:6.7,tmdb:11096, desc:"Un homme tombe amoureux d'une sirène à New York."},
+  {id:162,title:"Beverly Hills Cop",       year:1984,genre:"Action",   rating:7.3,tmdb:90,    desc:"Un flic de Detroit enquête sur le meurtre de son ami à Beverly Hills."},
+  {id:163,title:"The Breakfast Club",      year:1985,genre:"Drame",    rating:7.9,tmdb:2108,  desc:"Cinq lycéens très différents se retrouvent en colle le même samedi."},
+  {id:164,title:"Cocoon",                  year:1985,genre:"Fantastique",rating:6.8,tmdb:11080,desc:"Des retraités découvrent une fontaine de jouvence extraterrestre."},
+  {id:165,title:"Witness",                 year:1985,genre:"Thriller", rating:7.4,tmdb:10288, desc:"Un flic de Philadelphie protège un enfant Amish témoin d'un meurtre."},
+  {id:166,title:"Out of Africa",           year:1985,genre:"Drame",    rating:7.2,tmdb:8492,  desc:"Une femme danoise gère une plantation au Kenya et tombe amoureuse."},
+  {id:167,title:"Commando",                year:1985,genre:"Action",   rating:6.7,tmdb:9296,  desc:"Un ancien soldat d'élite doit sauver sa fille enlevée par des mercenaires."},
+  {id:168,title:"Stand by Me",             year:1986,genre:"Drame",    rating:8.1,tmdb:1586,  desc:"Quatre amis partent à la recherche d'un cadavre dans les bois."},
+  {id:169,title:"Ferris Bueller's Day Off",year:1986,genre:"Comedie",  rating:7.8,tmdb:9377,  desc:"Un lycéen charismatique simule une maladie pour passer une journée parfaite."},
+  {id:170,title:"Top Gun",                 year:1986,genre:"Action",   rating:6.9,tmdb:744,   desc:"Un pilote de chasse d'élite doit faire face à ses démons et à la compétition."},
+  {id:171,title:"The Color of Money",      year:1986,genre:"Drame",    rating:7.0,tmdb:2608,  desc:"Fast Eddie Felson prend sous son aile un jeune joueur de billard prodige."},
+  {id:172,title:"Predator",                year:1987,genre:"Action",   rating:7.8,tmdb:28,    desc:"Une équipe de soldats d'élite est traquée par une créature extraterrestre."},
+  {id:173,title:"Fatal Attraction",        year:1987,genre:"Thriller", rating:6.9,tmdb:10699, desc:"Une liaison d'un week-end tourne au cauchemar pour un avocat marié."},
+  {id:174,title:"Wall Street",             year:1987,genre:"Drame",    rating:7.4,tmdb:4960,  desc:"Un jeune courtier ambitieux est corrompu par un requin de la finance."},
+  {id:175,title:"Dirty Dancing",           year:1987,genre:"Comedie",  rating:7.0,tmdb:2897,  desc:"Une jeune femme découvre la danse et l'amour lors de vacances en famille."},
+  {id:176,title:"The Princess Bride",      year:1987,genre:"Action",   rating:8.0,tmdb:2493,  desc:"Un conte de fées parodique sur l'amour, la vengeance et les pirates."},
+  {id:177,title:"Lethal Weapon",           year:1987,genre:"Action",   rating:7.6,tmdb:941,   desc:"Un flic suicidaire et un flic rangé forment un duo explosif."},
+  {id:178,title:"Mississippi Burning",     year:1988,genre:"Drame",    rating:7.8,tmdb:9050,  desc:"Deux agents du FBI enquêtent sur la disparition de militants pour les droits civiques."},
+  {id:179,title:"Big",                     year:1988,genre:"Comedie",  rating:7.3,tmdb:1631,  desc:"Un enfant de 12 ans se réveille dans le corps d'un adulte."},
+  {id:180,title:"Willow",                  year:1988,genre:"Fantastique",rating:7.0,tmdb:8009, desc:"Un fermier nain protège un bébé destiné à renverser une sorcière maléfique."},
+  {id:181,title:"Midnight Run",            year:1988,genre:"Action",   rating:7.6,tmdb:11902, desc:"Un chasseur de primes escorte un comptable de la mafia à travers les États-Unis."},
+  {id:182,title:"Dead Poets Society",      year:1989,genre:"Drame",    rating:8.1,tmdb:207,   desc:"Un professeur anticonformiste inspire ses élèves à saisir le jour."},
+  {id:183,title:"Driving Miss Daisy",      year:1989,genre:"Drame",    rating:7.4,tmdb:955,   desc:"L'amitié improbable entre une vieille dame et son chauffeur noir."},
+  {id:184,title:"Sex Lies and Videotape",  year:1989,genre:"Drame",    rating:7.2,tmdb:10929, desc:"Un inconnu révèle les secrets enfouis d'un couple en crise."},
+  {id:185,title:"Born on Fourth of July",  year:1989,genre:"Guerre",   rating:7.2,tmdb:10218, desc:"Un vétéran du Vietnam paralysé devient militant contre la guerre."},
+  {id:186,title:"Indiana Jones Last Crusade",year:1989,genre:"Action", rating:8.2,tmdb:89,    desc:"Indiana Jones part à la recherche de son père et du Saint-Graal."},
+
+  // ── ANNÉES 90 ──
+  {id:33, title:"Goodfellas",              year:1990,genre:"Drame",    rating:8.7,tmdb:769,   desc:"L'ascension et la chute d'un gangster new-yorkais."},
+  {id:34, title:"The Silence of the Lambs",year:1991,genre:"Thriller", rating:8.6,tmdb:539,   desc:"Une agente du FBI consulte Hannibal Lecter."},
+  {id:35, title:"Terminator 2",            year:1991,genre:"Sci-Fi",   rating:8.6,tmdb:280,   desc:"Un Terminator protège John Connor."},
+  {id:36, title:"Unforgiven",              year:1992,genre:"Action",   rating:8.2,tmdb:2231,  desc:"Un ancien hors-la-loi reprend les armes pour une dernière mission."},
+  {id:37, title:"Schindler's List",        year:1993,genre:"Drame",    rating:9.0,tmdb:424,   desc:"Un industriel sauve des Juifs pendant la Seconde Guerre mondiale."},
+  {id:38, title:"Groundhog Day",           year:1993,genre:"Comedie",  rating:8.0,tmdb:1408,  desc:"Un journaliste revit la même journée en boucle."},
+  {id:39, title:"The Shawshank Redemption",year:1994,genre:"Drame",    rating:9.3,tmdb:278,   desc:"Un homme innocent survit grâce à l'espoir en prison."},
+  {id:40, title:"Forrest Gump",            year:1994,genre:"Drame",    rating:8.8,tmdb:13,    desc:"Un homme simple traverse l'histoire américaine."},
+  {id:41, title:"Pulp Fiction",            year:1994,genre:"Thriller", rating:8.9,tmdb:680,   desc:"Histoires croisées de criminels à Los Angeles."},
+  {id:42, title:"Se7en",                   year:1995,genre:"Thriller", rating:8.6,tmdb:807,   desc:"Deux détectives traquent un tueur en série démoniaque."},
+  {id:43, title:"Toy Story",               year:1995,genre:"Comedie",  rating:8.3,tmdb:862,   desc:"Des jouets prennent vie quand leur propriétaire a le dos tourné."},
+  {id:44, title:"Mission Impossible",      year:1996,genre:"Action",   rating:7.1,tmdb:954,   desc:"Un agent secret doit démasquer une taupe."},
+  {id:45, title:"Fargo",                   year:1996,genre:"Thriller", rating:8.1,tmdb:275,   desc:"Un homme engage des tueurs pour kidnapper sa femme."},
+  {id:46, title:"Good Will Hunting",       year:1997,genre:"Drame",    rating:8.3,tmdb:489,   desc:"Un génie des maths refuse de s'ouvrir au monde."},
+  {id:47, title:"Titanic",                 year:1997,genre:"Drame",    rating:7.9,tmdb:597,   desc:"Une histoire d'amour à bord du navire maudit."},
+  {id:48, title:"Saving Private Ryan",     year:1998,genre:"Guerre",   rating:8.6,tmdb:857,   desc:"Des soldats cherchent à sauver un para après le Débarquement."},
+  {id:49, title:"The Big Lebowski",        year:1998,genre:"Comedie",  rating:8.1,tmdb:115,   desc:"Un flemmiste est mêlé à une affaire d'enlèvement par erreur."},
+  {id:50, title:"American History X",      year:1998,genre:"Drame",    rating:8.5,tmdb:1283,  desc:"Un ancien néo-nazi tente d'empêcher son frère de suivre sa voie."},
+  {id:51, title:"The Matrix",              year:1999,genre:"Sci-Fi",   rating:8.7,tmdb:603,   desc:"Un hacker découvre que la réalité est une simulation."},
+  {id:52, title:"Fight Club",              year:1999,genre:"Thriller", rating:8.8,tmdb:550,   desc:"Un homme insomniaque crée un club de combat clandestin."},
+  {id:53, title:"The Sixth Sense",         year:1999,genre:"Horreur",  rating:8.2,tmdb:745,   desc:"Un enfant voit des morts et consulte un psychologue."},
+  {id:54, title:"American Beauty",         year:1999,genre:"Drame",    rating:8.3,tmdb:14,    desc:"Un père de famille remet tout en question à mi-vie."},
+
+  // ── ANNÉES 2000 ──
+  {id:55, title:"Gladiator",               year:2000,genre:"Action",   rating:8.5,tmdb:98,    desc:"Un général romain est réduit en esclavage et devient gladiateur."},
+  {id:56, title:"Memento",                 year:2000,genre:"Thriller", rating:8.4,tmdb:77,    desc:"Un homme sans mémoire à court terme cherche l'assassin de sa femme."},
+  {id:57, title:"Cast Away",               year:2000,genre:"Drame",    rating:7.8,tmdb:2662,  desc:"Un homme survit seul sur une île déserte pendant 4 ans."},
+  {id:58, title:"A Beautiful Mind",        year:2001,genre:"Drame",    rating:8.2,tmdb:453,   desc:"Un mathématicien brillant lutte contre la schizophrénie."},
+  {id:59, title:"Black Hawk Down",         year:2001,genre:"Guerre",   rating:7.7,tmdb:855,   desc:"Une mission militaire américaine tourne au cauchemar en Somalie."},
+  {id:60, title:"Minority Report",         year:2002,genre:"Sci-Fi",   rating:7.6,tmdb:6977,  desc:"Dans le futur, la police arrête les criminels avant qu'ils agissent."},
+  {id:61, title:"The Pianist",             year:2002,genre:"Drame",    rating:8.5,tmdb:423,   desc:"Un pianiste juif survit dans le ghetto de Varsovie."},
+  {id:62, title:"Kill Bill Vol.1",         year:2003,genre:"Action",   rating:8.1,tmdb:24,    desc:"Une ex-tueuse se venge de son ancien patron."},
+  {id:63, title:"Lost in Translation",     year:2003,genre:"Drame",    rating:7.7,tmdb:153,   desc:"Deux Américains perdus à Tokyo nouent une relation improbable."},
+  {id:64, title:"Eternal Sunshine",        year:2004,genre:"Drame",    rating:8.3,tmdb:38,    desc:"Un homme efface sa petite amie de sa mémoire."},
+  {id:65, title:"Million Dollar Baby",     year:2004,genre:"Drame",    rating:8.1,tmdb:70,    desc:"Un entraîneur aide une jeune femme à devenir boxeuse professionnelle."},
+  {id:66, title:"Brokeback Mountain",      year:2005,genre:"Drame",    rating:7.7,tmdb:broke, desc:"Deux cowboys vivent une relation secrète sur plusieurs décennies."},
+  {id:67, title:"Munich",                  year:2005,genre:"Thriller", rating:7.6,tmdb:721,   desc:"Israël organise une opération secrète après les JO de Munich 1972."},
+  {id:68, title:"The Departed",            year:2006,genre:"Thriller", rating:8.5,tmdb:1422,  desc:"Un flic infiltre la mafia pendant qu'un malfrat infiltre la police."},
+  {id:69, title:"No Country for Old Men",  year:2007,genre:"Thriller", rating:8.2,tmdb:6977,  desc:"Un chasseur trouve de l'argent et est traqué par un tueur impitoyable."},
+  {id:70, title:"There Will Be Blood",     year:2007,genre:"Drame",    rating:8.2,tmdb:1585,  desc:"L'ascension d'un prospecteur pétrolier sans scrupules."},
+  {id:71, title:"The Dark Knight",         year:2008,genre:"Action",   rating:9.0,tmdb:155,   desc:"Batman affronte le Joker dans une bataille pour Gotham."},
+  {id:72, title:"Slumdog Millionaire",     year:2008,genre:"Drame",    rating:8.0,tmdb:12405, desc:"Un jeune des bidonvilles de Mumbai participe à Qui veut gagner des millions."},
+  {id:73, title:"Gran Torino",             year:2008,genre:"Drame",    rating:8.1,tmdb:70808, desc:"Un vétéran de Corée se lie d'amitié avec ses voisins immigrés."},
+  {id:74, title:"Inglourious Basterds",    year:2009,genre:"Guerre",   rating:8.3,tmdb:16869, desc:"Un groupe de soldats juifs sème la terreur en France occupée."},
+  {id:75, title:"Avatar",                  year:2009,genre:"Fantastique",rating:7.9,tmdb:19995,desc:"Un soldat explore une planète extraterrestre luxuriante."},
+  {id:76, title:"Up",                      year:2009,genre:"Comedie",  rating:8.3,tmdb:14160, desc:"Un vieil homme s'envole vers l'Amérique du Sud avec sa maison."},
+
+  // ── ANNÉES 2010 ──
+  {id:77, title:"Inception",               year:2010,genre:"Fantastique",rating:8.8,tmdb:27205,desc:"Un voleur de rêves accepte une mission impossible."},
+  {id:78, title:"The Social Network",      year:2010,genre:"Drame",    rating:7.8,tmdb:37799, desc:"La création de Facebook et ses conflits fondateurs."},
+  {id:79, title:"True Grit",               year:2010,genre:"Action",   rating:7.6,tmdb:45243, desc:"Une jeune fille engage un marshal pour venger son père."},
+  {id:80, title:"Black Swan",              year:2010,genre:"Thriller", rating:8.0,tmdb:45612, desc:"Une ballerine sombre dans la folie en préparant le lac des cygnes."},
+  {id:81, title:"Drive",                   year:2011,genre:"Thriller", rating:7.8,tmdb:57012, desc:"Un chauffeur cascadeur est impliqué dans un braquage qui tourne mal."},
+  {id:82, title:"The Artist",              year:2011,genre:"Drame",    rating:7.9,tmdb:74643, desc:"Un acteur du muet résiste à l'arrivée du cinéma parlant."},
+  {id:83, title:"Django Unchained",        year:2012,genre:"Action",   rating:8.4,tmdb:68718, desc:"Un esclave libéré part à la recherche de sa femme avec un chasseur de primes."},
+  {id:84, title:"Argo",                    year:2012,genre:"Thriller", rating:7.7,tmdb:68734, desc:"La CIA monte une fausse production hollywoodienne pour libérer des otages."},
+  {id:85, title:"Lincoln",                 year:2012,genre:"Drame",    rating:7.4,tmdb:87516, desc:"Les derniers mois de la présidence d'Abraham Lincoln."},
+  {id:86, title:"Gravity",                 year:2013,genre:"Sci-Fi",   rating:7.7,tmdb:49047, desc:"Deux astronautes survivent seuls dans l'espace après une catastrophe."},
+  {id:87, title:"12 Years a Slave",        year:2013,genre:"Drame",    rating:8.1,tmdb:76203, desc:"Un homme libre est kidnappé et réduit en esclavage."},
+  {id:88, title:"The Wolf of Wall Street", year:2013,genre:"Drame",    rating:8.2,tmdb:106646,desc:"L'ascension et la chute d'un courtier véreux de Wall Street."},
+  {id:89, title:"Whiplash",                year:2014,genre:"Drame",    rating:8.5,tmdb:244786,desc:"Un jeune batteur sous l'emprise d'un professeur tyrannique."},
+  {id:90, title:"Interstellar",            year:2014,genre:"Fantastique",rating:8.7,tmdb:157336,desc:"Des astronautes traversent un trou de ver pour sauver l'humanité."},
+  {id:91, title:"Gone Girl",               year:2014,genre:"Thriller", rating:8.1,tmdb:210577,desc:"La disparition d'une femme révèle de sombres secrets."},
+  {id:92, title:"Grand Budapest Hotel",    year:2014,genre:"Comedie",  rating:8.1,tmdb:120467,desc:"Les aventures d'un concierge d'hôtel légendaire."},
+  {id:93, title:"Mad Max: Fury Road",      year:2015,genre:"Action",   rating:8.1,tmdb:76341, desc:"Course-poursuite épique dans un désert post-apocalyptique."},
+  {id:94, title:"The Martian",             year:2015,genre:"Sci-Fi",   rating:8.0,tmdb:286217,desc:"Un astronaute survit seul sur Mars en attendant d'être secouru."},
+  {id:95, title:"Spotlight",               year:2015,genre:"Drame",    rating:8.1,tmdb:314365,desc:"Une équipe de journalistes révèle les scandales de pédophilie dans l'Église."},
+  {id:96, title:"The Revenant",            year:2015,genre:"Action",   rating:8.0,tmdb:281957,desc:"Un trappeur survit à de rudes conditions pour se venger."},
+  {id:97, title:"La La Land",              year:2016,genre:"Comedie",  rating:8.0,tmdb:313369,desc:"Un musicien et une actrice vivent une histoire d'amour à Hollywood."},
+  {id:98, title:"Arrival",                 year:2016,genre:"Sci-Fi",   rating:7.9,tmdb:329865,desc:"Une linguiste tente de communiquer avec des extraterrestres."},
+  {id:99, title:"Moonlight",               year:2016,genre:"Drame",    rating:7.4,tmdb:376867,desc:"L'histoire d'un jeune homme noir qui grandit dans un quartier difficile de Miami."},
+  {id:100,title:"Get Out",                 year:2017,genre:"Horreur",  rating:7.7,tmdb:419430,desc:"Un homme découvre les horreurs de la famille de sa petite amie."},
+  {id:101,title:"Blade Runner 2049",       year:2017,genre:"Sci-Fi",   rating:8.0,tmdb:335984,desc:"Un blade runner découvre un secret qui pourrait tout changer."},
+  {id:102,title:"Three Billboards",        year:2017,genre:"Drame",    rating:8.1,tmdb:359940,desc:"Une mère interpelle la police pour le meurtre non résolu de sa fille."},
+  {id:103,title:"Dunkirk",                 year:2017,genre:"Guerre",   rating:7.9,tmdb:374720,desc:"L'évacuation de 400 000 soldats alliés de la plage de Dunkerque."},
+  {id:104,title:"A Quiet Place",           year:2018,genre:"Horreur",  rating:7.5,tmdb:447332,desc:"Une famille survit à des créatures chassant au son."},
+  {id:105,title:"Hereditary",              year:2018,genre:"Horreur",  rating:7.3,tmdb:493922,desc:"Une famille hantée par un sombre héritage occulte."},
+  {id:106,title:"BlackKklansman",          year:2018,genre:"Drame",    rating:7.5,tmdb:489999,desc:"Un policier noir infiltre le Ku Klux Klan."},
+  {id:107,title:"Avengers: Endgame",       year:2019,genre:"Action",   rating:8.4,tmdb:299534,desc:"Les Avengers tentent de renverser Thanos et de sauver l'univers."},
+  {id:108,title:"Joker",                   year:2019,genre:"Drame",    rating:8.4,tmdb:475557,desc:"L'origine du clown criminel de Gotham City."},
+  {id:109,title:"Once Upon a Time in Hollywood",year:2019,genre:"Drame",rating:7.6,tmdb:466272,desc:"Un acteur et son cascadeur vivent les derniers jours de l'âge d'or hollywoodien."},
+  {id:110,title:"Knives Out",              year:2019,genre:"Comedie",  rating:7.9,tmdb:546554,desc:"Un détective démêle un mystère familial tordu."},
+  {id:111,title:"1917",                    year:2019,genre:"Guerre",   rating:8.2,tmdb:530385,desc:"Deux soldats doivent traverser les lignes ennemies pour transmettre un message vital."},
+  {id:112,title:"Prisoners",               year:2013,genre:"Thriller", rating:8.1,tmdb:146233,desc:"Un père désespéré cherche sa fille kidnappée."},
+
+  // ── ANNÉES 2020 ──
+  {id:113,title:"Nomadland",               year:2020,genre:"Drame",    rating:7.3,tmdb:581734,desc:"Une femme part vivre sur les routes après la fermeture de son entreprise."},
+  {id:114,title:"Sound of Metal",          year:2020,genre:"Drame",    rating:7.8,tmdb:626735,desc:"Un batteur de heavy metal perd progressivement l'ouïe."},
+  {id:115,title:"Minari",                  year:2020,genre:"Drame",    rating:7.5,tmdb:635302,desc:"Une famille coréenne tente de s'établir dans l'Arkansas."},
+  {id:116,title:"The Father",              year:2020,genre:"Drame",    rating:8.2,tmdb:742070,desc:"Un homme âgé lutte contre la démence vue de son point de vue."},
+  {id:117,title:"Promising Young Woman",   year:2020,genre:"Thriller", rating:7.5,tmdb:700391,desc:"Une femme traque les prédateurs sexuels dans une mission de vengeance."},
+  {id:118,title:"Dune",                    year:2021,genre:"Sci-Fi",   rating:7.9,tmdb:438631,desc:"Un jeune noble est envoyé sur la planète désertique Arrakis."},
+  {id:119,title:"The Power of the Dog",    year:2021,genre:"Drame",    rating:6.8,tmdb:588228,desc:"Un rancher brutal intimide sa nouvelle belle-sœur et son fils."},
+  {id:120,title:"tick tick BOOM",          year:2021,genre:"Drame",    rating:7.6,tmdb:725820,desc:"Un compositeur new-yorkais lutte pour percer à Broadway."},
+  {id:121,title:"The Batman",              year:2022,genre:"Action",   rating:7.8,tmdb:414906,desc:"Bruce Wayne enquête sur un tueur en série qui cible l'élite de Gotham."},
+  {id:122,title:"Top Gun: Maverick",       year:2022,genre:"Action",   rating:8.3,tmdb:361743,desc:"Maverick repousse ses limites lors d'une mission suicide."},
+  {id:123,title:"Everything Everywhere",   year:2022,genre:"Sci-Fi",   rating:7.8,tmdb:545611,desc:"Une femme voyage entre les multiverses pour sauver l'existence."},
+  {id:124,title:"The Whale",               year:2022,genre:"Drame",    rating:7.2,tmdb:785084,desc:"Un homme obèse tente de renouer avec sa fille adolescente."},
+  {id:125,title:"Oppenheimer",             year:2023,genre:"Drame",    rating:8.3,tmdb:872585,desc:"L'histoire du père de la bombe atomique."},
+  {id:126,title:"Killers of the Flower Moon",year:2023,genre:"Drame",  rating:7.6,tmdb:872906,desc:"Des meurtres mystérieux frappent la nation Osage dans l'Oklahoma des années 20."},
+  {id:127,title:"Poor Things",             year:2023,genre:"Fantastique",rating:7.9,tmdb:792307,desc:"Une jeune femme ressuscitée explore le monde avec une soif de liberté."},
+  {id:128,title:"Dune: Part Two",          year:2024,genre:"Sci-Fi",   rating:8.5,tmdb:693134,desc:"Paul Atréides s'unit aux Fremen pour mener une guerre sainte."},
+  {id:129,title:"Civil War",               year:2024,genre:"Action",   rating:7.1,tmdb:1011985,desc:"Des journalistes traversent une Amérique en guerre civile."},
+  {id:130,title:"Longlegs",                year:2024,genre:"Horreur",  rating:6.2,tmdb:1001311,desc:"Une agente du FBI traque un tueur en série satanique."},
 ];
 
-const GENRES=["Tous","Action","Drame","Thriller","Horreur","Fantastique","Comedie","Sci-Fi","Guerre"];
-const LABELS={Comedie:"Comédie"};
-const EMOJI={Action:"💥",Drame:"🎭",Thriller:"🔪",Horreur:"👻",Fantastique:"✨",Comedie:"😄","Sci-Fi":"🚀",Guerre:"🎖️",Tous:"🎬"};
-const COLORS={Action:"#e74c3c",Drame:"#8e44ad",Thriller:"#c0392b",Horreur:"#546e7a",Fantastique:"#2980b9",Comedie:"#f39c12","Sci-Fi":"#16a085",Guerre:"#7f8c8d"};
-const MIN_Y=1968, MAX_Y=2024;
-const posterCache={};
+// Corriger l'ID tmdb incorrecte
+MOVIES.find(m=>m.id===66).tmdb=2734;
+MOVIES.find(m=>m.id===50).tmdb=1164;
+MOVIES.find(m=>m.id===53).tmdb=745;
 
+const GENRES=["Tous","Années 70","Années 80","Années 90","Années 2000","Années 2010","Années 2020","Action","Drame","Thriller","Horreur","Fantastique","Comedie","Sci-Fi","Guerre"];
+const DECADE_MAP={"Années 70":[1970,1979],"Années 80":[1980,1989],"Années 90":[1990,1999],"Années 2000":[2000,2009],"Années 2010":[2010,2019],"Années 2020":[2020,2029]};
+const LABELS={Comedie:"Comédie","Années 70":"Années 70","Années 80":"Années 80","Années 90":"Années 90","Années 2000":"Années 2000","Années 2010":"Années 2010","Années 2020":"Années 2020"};
+const EMOJI={Action:"💥",Drame:"🎭",Thriller:"🔪",Horreur:"👻",Fantastique:"✨",Comedie:"😄","Sci-Fi":"🚀",Guerre:"🎖️",Tous:"🎬","Années 70":"📽️","Années 80":"🕹️","Années 90":"📼","Années 2000":"💿","Années 2010":"📱","Années 2020":"🍿"};
+const COLORS={Action:"#e74c3c",Drame:"#8e44ad",Thriller:"#c0392b",Horreur:"#546e7a",Fantastique:"#2980b9",Comedie:"#f39c12","Sci-Fi":"#16a085",Guerre:"#7f8c8d","Années 70":"#d4a017","Années 80":"#e91e8c","Années 90":"#00bcd4","Années 2000":"#4caf50","Années 2010":"#9c27b0","Années 2020":"#f5c518"};
+
+const posterCache={};
 async function getPoster(tmdbId){
   if(posterCache[tmdbId]!==undefined) return posterCache[tmdbId];
   try{
     const r=await fetch(`https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${TMDB_KEY}&language=fr-FR`);
     const d=await r.json();
-    posterCache[tmdbId]=d.poster_path?IMG_BASE+d.poster_path:null;
-  }catch{ posterCache[tmdbId]=null; }
+    posterCache[tmdbId]=d.poster_path?IMG+d.poster_path:null;
+  }catch{posterCache[tmdbId]=null;}
   return posterCache[tmdbId];
 }
 
-let genre="Tous", yearMin=MIN_Y, yearMax=MAX_Y, search="";
-let aiMessages=[{role:"ai",text:"Salut ! Je suis Poppi 🍿\nDis-moi ce que tu veux voir ce soir !"}];
-let aiLoading=false;
-
+let activeTab="Tous", search="";
 function lbl(g){return LABELS[g]||g;}
-function filteredMovies(g){
+
+function getMovies(tab){
   return MOVIES.filter(m=>{
-    const gOk=(g||genre)==="Tous"||m.genre===(g||genre);
-    const yOk=m.year>=yearMin&&m.year<=yearMax;
+    const decade=DECADE_MAP[tab||activeTab];
+    const tabOk=(tab||activeTab)==="Tous"
+      ||(decade&&m.year>=decade[0]&&m.year<=decade[1])
+      ||(!decade&&(tab||activeTab)!=="Tous"&&m.genre===(tab||activeTab));
     const sOk=!search||m.title.toLowerCase().includes(search.toLowerCase())||String(m.year).includes(search);
-    return gOk&&yOk&&sOk;
+    return tabOk&&sOk;
   });
 }
 
 function createCard(m){
   const wrap=document.createElement('div');
-  wrap.className='poster-wrap';
+  wrap.className='pw';
   wrap.onclick=()=>openMovie(m.id);
-
   const ph=document.createElement('div');
-  ph.className='poster-placeholder shimmer';
-  ph.style.background=`linear-gradient(160deg,${COLORS[m.genre]}66,#111)`;
-
-  const titleEl=document.createElement('div');
-  titleEl.className='film-title';
-  titleEl.textContent=m.title;
-  const yearEl=document.createElement('div');
-  yearEl.className='film-year';
-  yearEl.textContent=m.year;
-
-  wrap.appendChild(ph);
-  wrap.appendChild(titleEl);
-  wrap.appendChild(yearEl);
-
+  ph.className='pp sh';
+  ph.style.background=`linear-gradient(160deg,${COLORS[m.genre]||'#333'}66,#111)`;
+  const t=document.createElement('div');t.className='ft';t.textContent=m.title;
+  const y=document.createElement('div');y.className='fy';y.textContent=m.year;
+  wrap.append(ph,t,y);
   getPoster(m.tmdb).then(url=>{
-    if(url){
-      const img=new Image();
-      img.className='poster-img';
-      img.src=url;
-      img.alt=m.title;
-      img.onload=()=>ph.replaceWith(img);
-      img.onerror=()=>{ph.classList.remove('shimmer');ph.textContent=EMOJI[m.genre];};
-    } else {
-      ph.classList.remove('shimmer');
-      ph.textContent=EMOJI[m.genre];
-    }
+    if(url){const img=new Image();img.className='pi';img.src=url;img.alt=m.title;img.onload=()=>ph.replaceWith(img);img.onerror=()=>{ph.classList.remove('sh');ph.textContent=EMOJI[m.genre]||'🎬';};}
+    else{ph.classList.remove('sh');ph.textContent=EMOJI[m.genre]||'🎬';}
   });
   return wrap;
 }
 
-function fillRow(movies, rowEl){
+function fillRow(movies,rowEl){
   rowEl.innerHTML='';
   movies.forEach(m=>rowEl.appendChild(createCard(m)));
   let down=false,sx,sl;
@@ -156,218 +291,146 @@ function fillRow(movies, rowEl){
 }
 
 function renderTabs(){
-  const tabs=document.getElementById('genre-tabs');
+  const tabs=document.getElementById('tabs');
   tabs.innerHTML='';
   GENRES.forEach(g=>{
     const btn=document.createElement('div');
-    btn.style.cssText=`flex:0 0 auto;border-radius:20px;padding:7px 14px;font-size:12px;font-weight:${genre===g?800:600};cursor:pointer;white-space:nowrap;transition:all 0.15s;background:${genre===g?(COLORS[g]||'#f5c518'):'#181818'};color:${genre===g?'#fff':'#777'};border:${genre===g?'none':'1px solid #2a2a2a'};`;
-    btn.textContent=`${EMOJI[g]} ${lbl(g)}`;
-    btn.onclick=()=>setGenre(g);
+    btn.style.cssText=`flex:0 0 auto;border-radius:20px;padding:7px 14px;font-size:12px;font-weight:${activeTab===g?800:600};cursor:pointer;white-space:nowrap;background:${activeTab===g?(COLORS[g]||'#f5c518'):'#181818'};color:${activeTab===g?'#fff':'#777'};border:${activeTab===g?'none':'1px solid #2a2a2a'};`;
+    btn.textContent=`${EMOJI[g]||'🎬'} ${lbl(g)}`;
+    btn.onclick=()=>setTab(g);
     tabs.appendChild(btn);
   });
 }
 
 function renderContent(){
   const content=document.getElementById('content');
-  const total=filteredMovies("Tous").length;
+  const total=getMovies("Tous").length;
   document.getElementById('film-count').textContent=total+' film'+(total>1?'s':'');
-  renderYearBtn();
   content.innerHTML='';
 
   if(search){
-    const movies=filteredMovies("Tous");
+    const mv=getMovies("Tous");
     const lbl2=document.createElement('div');
     lbl2.style.cssText='margin-bottom:12px;color:#777;font-size:13px;padding:0 2px;';
-    lbl2.innerHTML=`${movies.length} film${movies.length>1?'s':''} pour "<span style="color:#f5c518">${search}</span>"`;
-    const row=document.createElement('div');
-    row.className='row';
-    row.style.paddingLeft='0';
-    content.appendChild(lbl2);
-    content.appendChild(row);
-    fillRow(movies,row);
-    return;
+    lbl2.innerHTML=`${mv.length} résultat${mv.length>1?'s':''} pour "<span style="color:#f5c518">${search}</span>"`;
+    const row=document.createElement('div');row.className='row';row.style.paddingLeft='0';
+    content.append(lbl2,row);fillRow(mv,row);return;
   }
 
-  if(genre==="Tous"){
-    GENRES.filter(g=>g!=="Tous").forEach(g=>{
-      const mv=filteredMovies(g);
+  if(activeTab==="Tous"){
+    // Affiche les décennies puis les genres
+    const decades=["Années 70","Années 80","Années 90","Années 2000","Années 2010","Années 2020"];
+    const genreList=["Action","Drame","Thriller","Horreur","Fantastique","Comedie","Sci-Fi","Guerre"];
+    [...decades,...genreList].forEach(g=>{
+      const mv=getMovies(g);
       if(!mv.length) return;
-      const sec=document.createElement('div');
-      sec.style.marginBottom='28px';
+      const sec=document.createElement('div');sec.style.marginBottom='28px';
       const hdr=document.createElement('div');
       hdr.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:0 2px;margin-bottom:10px;';
-      hdr.innerHTML=`<span style="font-weight:800;font-size:15px;"><span style="color:${COLORS[g]}">${EMOJI[g]}</span> ${lbl(g)} <span style="color:#444;font-size:11px;">${mv.length} films</span></span><button style="background:none;border:none;color:#555;font-size:13px;cursor:pointer;">Tout voir ›</button>`;
-      hdr.querySelector('button').onclick=()=>setGenre(g);
-      const row=document.createElement('div');
-      row.className='row';
-      sec.appendChild(hdr);
-      sec.appendChild(row);
-      content.appendChild(sec);
-      fillRow(mv,row);
+      hdr.innerHTML=`<span style="font-weight:800;font-size:15px;"><span style="color:${COLORS[g]}">${EMOJI[g]||'🎬'}</span> ${lbl(g)} <span style="color:#444;font-size:11px;">${mv.length} films</span></span><button style="background:none;border:none;color:#555;font-size:13px;cursor:pointer;">Tout voir ›</button>`;
+      hdr.querySelector('button').onclick=()=>setTab(g);
+      const row=document.createElement('div');row.className='row';
+      sec.append(hdr,row);content.appendChild(sec);fillRow(mv,row);
     });
   } else {
-    const movies=filteredMovies();
+    const mv=getMovies();
     const hdr=document.createElement('div');
     hdr.style.cssText='margin-bottom:14px;padding:0 2px;';
-    hdr.innerHTML=`<span style="font-weight:800;font-size:16px;color:${COLORS[genre]||'#fff'}">${EMOJI[genre]} ${lbl(genre)}</span> <span style="color:#444;font-size:12px;">${movies.length} films</span>`;
+    hdr.innerHTML=`<span style="font-weight:800;font-size:16px;color:${COLORS[activeTab]||'#fff'}">${EMOJI[activeTab]||'🎬'} ${lbl(activeTab)}</span> <span style="color:#444;font-size:12px;">${mv.length} films</span>`;
     content.appendChild(hdr);
-    if(!movies.length){
-      const empty=document.createElement('div');
-      empty.style.cssText='text-align:center;padding:60px 0;color:#333;';
-      empty.innerHTML='<div style="font-size:48px;">🍿</div><div style="font-size:14px;margin-top:10px;">Aucun film</div>';
-      content.appendChild(empty);
+    if(!mv.length){
+      content.innerHTML+='<div style="text-align:center;padding:60px 0;color:#333;"><div style="font-size:48px;">🍿</div><div style="font-size:14px;margin-top:10px;">Aucun film</div></div>';
     } else {
-      const row=document.createElement('div');
-      row.className='row';
-      row.style.paddingLeft='0';
-      content.appendChild(row);
-      fillRow(movies,row);
+      const row=document.createElement('div');row.className='row';row.style.paddingLeft='0';
+      content.appendChild(row);fillRow(mv,row);
     }
   }
 }
 
-function setGenre(g){
-  genre=g; search='';
-  const si=document.getElementById('search-input');
-  if(si){si.value='';document.getElementById('search-clear').style.display='none';}
-  renderTabs(); renderContent();
+function setTab(g){
+  activeTab=g;search='';
+  const si=document.getElementById('si');if(si){si.value='';document.getElementById('sc').style.display='none';}
+  renderTabs();renderContent();
 }
 
 // Modal film
 window.openMovie=async function(id){
-  const m=MOVIES.find(x=>x.id===id);
-  if(!m) return;
-  document.getElementById('movie-modal')?.remove();
-  const el=document.createElement('div');
-  el.id='movie-modal';
+  const m=MOVIES.find(x=>x.id===id);if(!m)return;
+  document.getElementById('mm')?.remove();
+  const el=document.createElement('div');el.id='mm';
   el.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:200;display:flex;align-items:flex-end;';
   const url=await getPoster(m.tmdb);
-  const posterHtml=url
-    ?`<img src="${url}" style="width:100px;height:140px;border-radius:12px;object-fit:cover;box-shadow:0 4px 20px rgba(0,0,0,0.7);flex-shrink:0;">`
-    :`<div style="width:100px;height:140px;border-radius:12px;background:linear-gradient(160deg,${COLORS[m.genre]}88,#111);display:flex;align-items:center;justify-content:center;font-size:40px;flex-shrink:0;">${EMOJI[m.genre]}</div>`;
-  el.innerHTML=`
-    <div style="background:#141414;width:100%;max-width:420px;margin:0 auto;border-radius:24px 24px 0 0;overflow:hidden;max-height:92vh;overflow-y:auto;">
-      <div style="background:linear-gradient(160deg,${COLORS[m.genre]}44,#0a0a0a);padding:28px 22px 20px;display:flex;gap:16px;align-items:flex-start;">
-        ${posterHtml}
-        <div style="flex:1;padding-top:4px;">
-          <div style="color:#fff;font-weight:800;font-size:18px;line-height:1.2;margin-bottom:6px;">${m.title}</div>
-          <div style="color:rgba(255,255,255,0.5);font-size:12px;margin-bottom:8px;">${m.year}</div>
-          <div style="color:#f5c518;font-size:14px;margin-bottom:10px;">${'★'.repeat(Math.round(m.rating/2))}${'☆'.repeat(5-Math.round(m.rating/2))} <span style="color:#666;font-size:12px;">${m.rating}/10</span></div>
-          <div style="display:inline-block;background:${COLORS[m.genre]}33;color:${COLORS[m.genre]};font-size:10px;padding:3px 10px;border-radius:18px;font-weight:700;border:1px solid ${COLORS[m.genre]}55;">${EMOJI[m.genre]} ${lbl(m.genre)}</div>
-        </div>
+  const ph=url?`<img src="${url}" style="width:100px;height:140px;border-radius:12px;object-fit:cover;box-shadow:0 4px 20px rgba(0,0,0,0.7);flex-shrink:0;">`
+    :`<div style="width:100px;height:140px;border-radius:12px;background:linear-gradient(160deg,${COLORS[m.genre]||'#333'}88,#111);display:flex;align-items:center;justify-content:center;font-size:40px;flex-shrink:0;">${EMOJI[m.genre]||'🎬'}</div>`;
+  el.innerHTML=`<div style="background:#141414;width:100%;max-width:430px;margin:0 auto;border-radius:24px 24px 0 0;overflow:hidden;max-height:92vh;overflow-y:auto;">
+    <div style="background:linear-gradient(160deg,${COLORS[m.genre]||'#333'}44,#0a0a0a);padding:28px 22px 20px;display:flex;gap:16px;align-items:flex-start;">
+      ${ph}
+      <div style="flex:1;padding-top:4px;">
+        <div style="color:#fff;font-weight:800;font-size:18px;line-height:1.2;margin-bottom:6px;">${m.title}</div>
+        <div style="color:rgba(255,255,255,0.5);font-size:12px;margin-bottom:8px;">${m.year}</div>
+        <div style="color:#f5c518;font-size:14px;margin-bottom:10px;">${'★'.repeat(Math.round(m.rating/2))}${'☆'.repeat(5-Math.round(m.rating/2))} <span style="color:#666;font-size:12px;">${m.rating}/10</span></div>
+        <div style="display:inline-block;background:${COLORS[m.genre]||'#333'}33;color:${COLORS[m.genre]||'#aaa'};font-size:10px;padding:3px 10px;border-radius:18px;font-weight:700;border:1px solid ${COLORS[m.genre]||'#333'}55;">${EMOJI[m.genre]||'🎬'} ${lbl(m.genre)}</div>
       </div>
-      <div style="padding:20px 22px 36px;">
-        <div style="color:#aaa;font-size:14px;line-height:1.7;">${m.desc}</div>
-        <button id="close-btn" style="margin-top:24px;width:100%;background:#f5c518;color:#000;border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;">Fermer</button>
-      </div>
-    </div>`;
+    </div>
+    <div style="padding:20px 22px 36px;">
+      <div style="color:#aaa;font-size:14px;line-height:1.7;">${m.desc}</div>
+      <button id="cb" style="margin-top:24px;width:100%;background:#f5c518;color:#000;border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;">Fermer</button>
+    </div>
+  </div>`;
   document.body.appendChild(el);
   el.onclick=()=>el.remove();
-  document.getElementById('close-btn').onclick=e=>{e.stopPropagation();el.remove();};
+  document.getElementById('cb').onclick=e=>{e.stopPropagation();el.remove();};
 };
 
-// Year modal
-function renderYearBtn(){
-  const ya=yearMin!==MIN_Y||yearMax!==MAX_Y;
-  const btn=document.getElementById('year-btn');
-  if(!btn) return;
-  btn.textContent=`🗓️ ${ya?yearMin+' – '+yearMax:'Années'}${ya?' ×':''}`;
-  btn.style.cssText=`background:${ya?'#f5c518':'#181818'};border:${ya?'none':'1px solid #2a2a2a'};border-radius:20px;color:${ya?'#000':'#666'};padding:5px 13px;cursor:pointer;font-size:12px;font-weight:${ya?800:400};`;
-  btn.onclick=ya?()=>{yearMin=MIN_Y;yearMax=MAX_Y;renderContent();}:openYear;
-}
-
-function openYear(){
-  document.getElementById('year-modal')?.remove();
-  const pct=v=>(v-MIN_Y)/(MAX_Y-MIN_Y)*100;
-  const decades=[1970,1980,1990,2000,2010,2020];
-  const el=document.createElement('div');
-  el.id='year-modal';
-  el.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:300;display:flex;align-items:flex-end;';
-  el.innerHTML=`
-    <div style="background:#141414;width:100%;max-width:420px;margin:0 auto;border-radius:24px 24px 0 0;padding:22px 22px 36px;">
-      <div style="width:36px;height:4px;background:#333;border-radius:2px;margin:0 auto 18px;"></div>
-      <div style="font-weight:800;font-size:16px;margin-bottom:6px;">🗓️ Filtrer par année</div>
-      <div id="yl" style="color:#f5c518;font-weight:800;font-size:22px;text-align:center;margin-bottom:18px;">${yearMin} — ${yearMax}</div>
-      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px;">
-        <button onclick="yd(${MIN_Y},${MAX_Y})" style="background:#222;border:none;border-radius:18px;color:#aaa;padding:5px 12px;font-size:11px;cursor:pointer;font-weight:600;">Tout</button>
-        ${decades.map(d=>`<button onclick="yd(${d},${Math.min(d+9,MAX_Y)})" style="background:#222;border:none;border-radius:18px;color:#aaa;padding:5px 12px;font-size:11px;cursor:pointer;font-weight:600;">${d}s</button>`).join('')}
-      </div>
-      <div style="position:relative;height:36px;margin-bottom:6px;">
-        <div style="position:absolute;top:50%;left:0;right:0;height:4px;background:#333;border-radius:2px;transform:translateY(-50%);"></div>
-        <div id="yf" style="position:absolute;top:50%;height:4px;background:#f5c518;border-radius:2px;transform:translateY(-50%);left:${pct(yearMin)}%;width:${pct(yearMax)-pct(yearMin)}%;"></div>
-        <input id="ya" type="range" min="${MIN_Y}" max="${MAX_Y}" value="${yearMin}" oninput="yum(this.value)" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:36px;z-index:2;">
-        <input id="yb" type="range" min="${MIN_Y}" max="${MAX_Y}" value="${yearMax}" oninput="yux(this.value)" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:36px;z-index:2;">
-        <div id="yt1" style="position:absolute;top:50%;left:${pct(yearMin)}%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:#f5c518;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.6);pointer-events:none;z-index:1;"></div>
-        <div id="yt2" style="position:absolute;top:50%;left:${pct(yearMax)}%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:#f5c518;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.6);pointer-events:none;z-index:1;"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;color:#444;font-size:10px;margin-bottom:22px;"><span>${MIN_Y}</span><span>${MAX_Y}</span></div>
-      <button id="ya-apply" style="width:100%;background:#f5c518;color:#000;border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;">Appliquer</button>
-      <button onclick="document.getElementById('year-modal').remove()" style="width:100%;background:none;color:#555;border:none;padding:8px;cursor:pointer;margin-top:4px;font-size:13px;">Annuler</button>
-    </div>`;
-  document.body.appendChild(el);
-  el.onclick=e=>{if(e.target===el)el.remove();};
-  document.getElementById('ya-apply').onclick=()=>{
-    yearMin=parseInt(document.getElementById('ya').value);
-    yearMax=parseInt(document.getElementById('yb').value);
-    el.remove(); renderContent();
-  };
-}
-window.yum=function(v){const b=parseInt(document.getElementById('yb').value),val=Math.min(parseInt(v),b-1),p=x=>(x-MIN_Y)/(MAX_Y-MIN_Y)*100;document.getElementById('ya').value=val;document.getElementById('yl').textContent=val+' — '+b;document.getElementById('yt1').style.left=p(val)+'%';document.getElementById('yf').style.left=p(val)+'%';document.getElementById('yf').style.width=(p(b)-p(val))+'%';};
-window.yux=function(v){const a=parseInt(document.getElementById('ya').value),val=Math.max(parseInt(v),a+1),p=x=>(x-MIN_Y)/(MAX_Y-MIN_Y)*100;document.getElementById('yb').value=val;document.getElementById('yl').textContent=a+' — '+val;document.getElementById('yt2').style.left=p(val)+'%';document.getElementById('yf').style.width=(p(val)-p(a))+'%';};
-window.yd=function(min,max){const p=x=>(x-MIN_Y)/(MAX_Y-MIN_Y)*100;document.getElementById('ya').value=min;document.getElementById('yb').value=max;document.getElementById('yl').textContent=min+' — '+max;document.getElementById('yt1').style.left=p(min)+'%';document.getElementById('yt2').style.left=p(max)+'%';document.getElementById('yf').style.left=p(min)+'%';document.getElementById('yf').style.width=(p(max)-p(min))+'%';};
-
 // Poppi AI
+let aiMsg=[{role:"ai",text:"Salut ! Je suis Poppi 🍿\nDis-moi ce que tu veux voir ce soir — genre, décennie, ambiance… Je te trouve le film parfait !"}];
+let aiLoad=false;
 async function sendPoppi(txt){
-  if(aiLoading||!txt.trim())return;
-  aiMessages.push({role:"user",text:txt});
-  aiLoading=true; renderAIChat();
+  if(aiLoad||!txt.trim())return;
+  aiMsg.push({role:"user",text:txt});aiLoad=true;renderChat();
   const ml=MOVIES.map(m=>`${m.title} (${m.year}, ${m.genre}, ★${m.rating})`).join(', ');
   try{
     const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:600,
-        system:`Tu es Poppi, assistant cinéma de Popcorn Movie 🍿. Réponds en français, chaleureux et enthousiaste. Films dispo: ${ml}. Mets titres entre [[doubles crochets]]. Max 3 recommandations.`,
-        messages:aiMessages.filter(m=>m.role!=="ai").map(m=>({role:m.role==="user"?"user":"assistant",content:m.text}))})});
+        system:`Tu es Poppi, assistant cinéma de Popcorn Movie 🍿. Réponds en français, chaleureux. Films dispo: ${ml}. Mets titres entre [[doubles crochets]]. Max 3 recommandations.`,
+        messages:aiMsg.filter(m=>m.role!=="ai").map(m=>({role:m.role==="user"?"user":"assistant",content:m.text}))})});
     const d=await r.json();
-    aiMessages.push({role:"ai",text:d.content?.map(b=>b.text||"").join("")||"Oups 🍿"});
-  }catch{aiMessages.push({role:"ai",text:"Connexion perdue 🍿 Réessaie !"});}
-  aiLoading=false; renderAIChat();
+    aiMsg.push({role:"ai",text:d.content?.map(b=>b.text||"").join("")||"Oups 🍿"});
+  }catch{aiMsg.push({role:"ai",text:"Connexion perdue 🍿"});}
+  aiLoad=false;renderChat();
 }
-function renderAIChat(){
-  const chat=document.getElementById('ai-chat');
-  if(!chat) return;
-  chat.innerHTML=aiMessages.map(m=>`
-    <div style="display:flex;justify-content:${m.role==='user'?'flex-end':'flex-start'};gap:8px;align-items:flex-end;margin-bottom:10px;">
-      ${m.role==='ai'?'<div style="width:26px;height:26px;border-radius:50%;background:#f5c518;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">🍿</div>':''}
-      <div style="max-width:78%;background:${m.role==='user'?'#f5c518':'#1e1e1e'};color:${m.role==='user'?'#000':'#fff'};border-radius:${m.role==='user'?'18px 18px 4px 18px':'18px 18px 18px 4px'};padding:9px 13px;font-size:13px;line-height:1.5;border:${m.role==='ai'?'1px solid #2a2a2a':'none'};">
-        ${m.role==='ai'?m.text.replace(/\[\[(.+?)\]\]/g,'<b style="background:#f5c518;color:#000;padding:1px 8px;border-radius:10px;cursor:pointer;">$1</b>').replace(/\n/g,'<br>'):m.text}
-      </div>
-    </div>`).join('')+(aiLoading?`<div style="display:flex;gap:5px;padding:10px;background:#1e1e1e;border-radius:18px;width:fit-content;margin-bottom:10px;">${[0,.2,.4].map(d=>`<div style="width:7px;height:7px;border-radius:50%;background:#f5c518;animation:bounce 1s ${d}s infinite;"></div>`).join('')}</div>`:'');
-  chat.scrollTop=chat.scrollHeight;
+function renderChat(){
+  const c=document.getElementById('ac');if(!c)return;
+  c.innerHTML=aiMsg.map(m=>`<div style="display:flex;justify-content:${m.role==='user'?'flex-end':'flex-start'};gap:8px;align-items:flex-end;margin-bottom:10px;">
+    ${m.role==='ai'?'<div style="width:26px;height:26px;border-radius:50%;background:#f5c518;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">🍿</div>':''}
+    <div style="max-width:78%;background:${m.role==='user'?'#f5c518':'#1e1e1e'};color:${m.role==='user'?'#000':'#fff'};border-radius:${m.role==='user'?'18px 18px 4px 18px':'18px 18px 18px 4px'};padding:9px 13px;font-size:13px;line-height:1.5;border:${m.role==='ai'?'1px solid #2a2a2a':'none'};">
+      ${m.role==='ai'?m.text.replace(/\[\[(.+?)\]\]/g,'<b style="background:#f5c518;color:#000;padding:1px 8px;border-radius:10px;">$1</b>').replace(/\n/g,'<br>'):m.text}
+    </div></div>`).join('')+(aiLoad?`<div style="display:flex;gap:5px;padding:10px;background:#1e1e1e;border-radius:18px;width:fit-content;">${[0,.2,.4].map(d=>`<div style="width:7px;height:7px;border-radius:50%;background:#f5c518;animation:bounce 1s ${d}s infinite;"></div>`).join('')}</div>`:'');
+  c.scrollTop=c.scrollHeight;
 }
 function openAI(){
-  document.getElementById('ai-overlay')?.remove();
-  const el=document.createElement('div');
-  el.id='ai-overlay';
+  document.getElementById('ao')?.remove();
+  const el=document.createElement('div');el.id='ao';
   el.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:200;display:flex;flex-direction:column;';
   el.innerHTML=`
     <div style="background:#111;padding:14px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #222;flex-shrink:0;">
       <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f5c518,#e6a800);display:flex;align-items:center;justify-content:center;font-size:20px;">🍿</div>
       <div><div style="font-weight:800;font-size:16px;">Poppi</div><div style="color:#f5c518;font-size:11px;">Ton assistant cinéma</div></div>
-      <button onclick="document.getElementById('ai-overlay').remove()" style="margin-left:auto;background:none;border:none;color:#666;font-size:24px;cursor:pointer;">✕</button>
+      <button onclick="document.getElementById('ao').remove()" style="margin-left:auto;background:none;border:none;color:#666;font-size:24px;cursor:pointer;">✕</button>
     </div>
-    <div id="ai-chat" style="flex:1;overflow-y:auto;padding:14px;background:#0a0a0a;"></div>
+    <div id="ac" style="flex:1;overflow-y:auto;padding:14px;background:#0a0a0a;"></div>
     <div style="display:flex;gap:8px;overflow-x:auto;padding:8px 14px;background:#0a0a0a;flex-shrink:0;">
-      ${["Film action 80s 🔥","Thriller haletant 😰","Quelque chose de drôle 😂","Classique 70s 🎞️"].map(s=>`<button onclick="qs('${s.replace(/'/g,"\\'")}')" style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:18px;color:#bbb;padding:6px 12px;font-size:11px;cursor:pointer;white-space:nowrap;flex-shrink:0;">${s}</button>`).join('')}
+      ${["Film des années 70 🎞️","Action 80s 🔥","Thriller 90s 😰","Chef-d'œuvre 2000s 🏆","Classique guerre 🎖️"].map(s=>`<button onclick="qs('${s.replace(/'/g,"\\'")}')" style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:18px;color:#bbb;padding:6px 12px;font-size:11px;cursor:pointer;white-space:nowrap;flex-shrink:0;">${s}</button>`).join('')}
     </div>
     <div style="background:#111;padding:10px 14px;display:flex;gap:8px;border-top:1px solid #222;flex-shrink:0;">
-      <input id="ai-input" placeholder="Parle à Poppi…" style="flex:1;background:#1e1e1e;border:1px solid #2a2a2a;border-radius:22px;padding:10px 15px;font-size:13px;outline:none;color:#fff;">
-      <button id="ai-send" style="background:#f5c518;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:16px;color:#000;">➤</button>
+      <input id="ai" placeholder="Parle à Poppi…" style="flex:1;background:#1e1e1e;border:1px solid #2a2a2a;border-radius:22px;padding:10px 15px;font-size:13px;outline:none;color:#fff;">
+      <button id="as" style="background:#f5c518;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:16px;color:#000;">➤</button>
     </div>`;
   document.body.appendChild(el);
-  const inp=document.getElementById('ai-input');
-  document.getElementById('ai-send').onclick=()=>{sendPoppi(inp.value);inp.value='';};
+  const inp=document.getElementById('ai');
+  document.getElementById('as').onclick=()=>{sendPoppi(inp.value);inp.value='';};
   inp.onkeydown=e=>{if(e.key==='Enter'){sendPoppi(inp.value);inp.value='';}};
-  renderAIChat();
+  renderChat();
 }
 window.qs=t=>sendPoppi(t);
 
@@ -377,35 +440,31 @@ document.getElementById('root').innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;">
       <div>
         <div style="font-size:18px;font-weight:900;">🍿 <span style="color:#f5c518">Popcorn</span> Movie</div>
-        <div style="color:#444;font-size:10px;margin-top:1px;">Films américains</div>
+        <div style="color:#444;font-size:10px;margin-top:1px;">${MOVIES.length} films américains</div>
       </div>
       <button onclick="openAI()" style="background:linear-gradient(135deg,#f5c518,#e6a800);border:none;border-radius:22px;color:#000;padding:7px 15px;cursor:pointer;font-weight:800;font-size:12px;">🍿 Poppi</button>
     </div>
     <div style="position:relative;margin-bottom:11px;">
       <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#555;">🔍</span>
-      <input id="search-input" placeholder="Titre, année…" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:22px;padding:9px 36px 9px 36px;font-size:13px;outline:none;">
-      <button id="search-clear" style="display:none;position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;color:#555;cursor:pointer;font-size:17px;">✕</button>
+      <input id="si" placeholder="Titre, année, genre…" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:22px;padding:9px 36px 9px 36px;font-size:13px;outline:none;">
+      <button id="sc" style="display:none;position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;color:#555;cursor:pointer;font-size:17px;">✕</button>
     </div>
-    <div id="genre-tabs" class="genre-tabs"></div>
+    <div id="tabs" class="tabs"></div>
   </div>
-  <div style="background:#0d0d0d;padding:8px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #181818;">
-    <button id="year-btn"></button>
+  <div style="background:#0d0d0d;padding:8px 18px;border-bottom:1px solid #181818;">
     <span id="film-count" style="color:#444;font-size:11px;"></span>
   </div>
   <div id="content" style="padding:18px 18px 90px;"></div>
   <div style="position:fixed;bottom:0;left:0;right:0;background:rgba(12,12,12,0.97);border-top:1px solid #1e1e1e;display:flex;padding:9px 0 16px;z-index:50;">
-    <button onclick="setGenre('Tous')" style="flex:1;background:none;border:none;color:#555;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:20px;">🏠<span style="font-size:9px;color:#444">Accueil</span></button>
-    <button onclick="document.getElementById('search-input').focus()" style="flex:1;background:none;border:none;color:#555;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:20px;">🔍<span style="font-size:9px;color:#444">Recherche</span></button>
+    <button onclick="setTab('Tous')" style="flex:1;background:none;border:none;color:#555;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:20px;">🏠<span style="font-size:9px;color:#444">Accueil</span></button>
+    <button onclick="document.getElementById('si').focus()" style="flex:1;background:none;border:none;color:#555;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:20px;">🔍<span style="font-size:9px;color:#444">Recherche</span></button>
     <button onclick="openAI()" style="flex:1;background:none;border:none;color:#555;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:20px;">🍿<span style="font-size:9px;color:#444">Poppi</span></button>
   </div>`;
 
-const si=document.getElementById('search-input');
-const sc=document.getElementById('search-clear');
-si.oninput=()=>{search=si.value;sc.style.display=search?'block':'none';genre="Tous";renderTabs();renderContent();};
+const si=document.getElementById('si'),sc=document.getElementById('sc');
+si.oninput=()=>{search=si.value;sc.style.display=search?'block':'none';activeTab="Tous";renderTabs();renderContent();};
 sc.onclick=()=>{si.value='';search='';sc.style.display='none';renderTabs();renderContent();};
-
-renderTabs();
-renderContent();
+renderTabs();renderContent();
 </script>
 </body>
 </html>
