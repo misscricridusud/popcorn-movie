@@ -32,22 +32,22 @@ const MOVIES = [
   // ── ANNÉES 70 ──
   {id:1,  title:"The Godfather",           year:1972,genre:"Drame",    rating:9.2,tmdb:238,   desc:"La saga d'une famille mafieuse new-yorkaise."},
   {id:2,  title:"The Exorcist",            year:1973,genre:"Horreur",  rating:8.1,tmdb:9552,  desc:"Une petite fille est possédée par un démon."},
-  {id:3,  title:"Chinatown",               year:1974,genre:"Thriller", rating:8.2,tmdb:1930,  desc:"Un détective plonge dans la corruption de L.A."},
+  {id:3,  title:"Chinatown",               year:1974,genre:"Thriller", rating:8.2,tmdb:829,   desc:"Un détective plonge dans la corruption de L.A."},
   {id:4,  title:"Jaws",                    year:1975,genre:"Horreur",  rating:8.0,tmdb:578,   desc:"Un grand blanc terrorise une ville côtière."},
   {id:5,  title:"Rocky",                   year:1976,genre:"Action",   rating:8.1,tmdb:1367,  desc:"Un boxeur sans avenir rêve de devenir champion."},
   {id:6,  title:"Taxi Driver",             year:1976,genre:"Thriller", rating:8.2,tmdb:103,   desc:"Un chauffeur de taxi instable devient justicier."},
   {id:7,  title:"Star Wars",               year:1977,genre:"Sci-Fi",   rating:8.6,tmdb:11,    desc:"Un jeune fermier combat l'Empire galactique."},
   {id:8,  title:"Annie Hall",              year:1977,genre:"Comedie",  rating:8.0,tmdb:703,   desc:"Une histoire d'amour new-yorkaise en flashbacks."},
   {id:9,  title:"Close Encounters",        year:1977,genre:"Fantastique",rating:7.6,tmdb:840, desc:"Un homme obsédé par un contact extraterrestre."},
-  {id:10, title:"The Deer Hunter",         year:1978,genre:"Guerre",   rating:8.1,tmdb:745,   desc:"Des amis voient leur vie brisée par le Vietnam."},
+  {id:10, title:"The Deer Hunter",         year:1978,genre:"Guerre",   rating:8.1,tmdb:11778, desc:"Des amis voient leur vie brisée par le Vietnam."},
   {id:11, title:"Halloween",               year:1978,genre:"Horreur",  rating:7.7,tmdb:948,   desc:"Michael Myers terrorise une petite ville."},
   {id:12, title:"Apocalypse Now",          year:1979,genre:"Guerre",   rating:8.4,tmdb:1579,  desc:"Un capitaine remonte le fleuve pour éliminer un colonel."},
   {id:13, title:"Alien",                   year:1979,genre:"Sci-Fi",   rating:8.5,tmdb:348,   desc:"L'équipage d'un vaisseau affronte une créature mortelle."},
-  {id:14, title:"Kramer vs Kramer",        year:1979,genre:"Drame",    rating:7.8,tmdb:9443,  desc:"Un père apprend à élever seul son fils."},
+  {id:14, title:"Kramer vs Kramer",        year:1979,genre:"Drame",    rating:7.8,tmdb:12102, desc:"Un père apprend à élever seul son fils."},
   {id:15, title:"All the President's Men", year:1976,genre:"Thriller", rating:8.0,tmdb:8947,  desc:"Deux journalistes enquêtent sur le Watergate."},
-  {id:131,title:"The French Connection",   year:1971,genre:"Thriller", rating:7.7,tmdb:8012,  desc:"Un flic new-yorkais obsessionnel traque un réseau de trafic de drogue."},
-  {id:132,title:"Dirty Harry",             year:1971,genre:"Action",   rating:7.7,tmdb:4806,  desc:"L'inspecteur Harry pourchasse un tueur en série à San Francisco."},
-  {id:133,title:"Deliverance",             year:1972,genre:"Thriller", rating:7.7,tmdb:9426,  desc:"Quatre amis vivent un voyage en canoë qui tourne au cauchemar."},
+  {id:131,title:"The French Connection",   year:1971,genre:"Thriller", rating:7.7,tmdb:1051,  desc:"Un flic new-yorkais obsessionnel traque un réseau de trafic de drogue."},
+  {id:132,title:"Dirty Harry",             year:1971,genre:"Action",   rating:7.7,tmdb:984,   desc:"L'inspecteur Harry pourchasse un tueur en série à San Francisco."},
+  {id:133,title:"Deliverance",             year:1972,genre:"Thriller", rating:7.7,tmdb:10669, desc:"Quatre amis vivent un voyage en canoë qui tourne au cauchemar."},
   {id:134,title:"Serpico",                 year:1973,genre:"Action",   rating:7.7,tmdb:4550,  desc:"Un policier honnête lutte seul contre la corruption de la NYPD."},
   {id:135,title:"American Graffiti",       year:1973,genre:"Comedie",  rating:7.4,tmdb:1907,  desc:"Une nuit dans la vie d'adolescents californiens en 1962."},
   {id:136,title:"Dog Day Afternoon",       year:1975,genre:"Thriller", rating:8.0,tmdb:1640,  desc:"Un hold-up qui dérape devient un événement médiatique."},
@@ -276,7 +276,163 @@ const MOVIES = [
   {id:53, title:"The Sixth Sense",         year:1999,genre:"Horreur",  rating:8.2,tmdb:745,   desc:"Un enfant voit des morts et consulte un psychologue."},
   {id:54, title:"American Beauty",         year:1999,genre:"Drame",    rating:8.3,tmdb:14,    desc:"Un père de famille remet tout en question à mi-vie."},
 
-  // ── ANNÉES 2000 ──
+
+  // ── AJOUTS 1969-1990 ──
+  {id:329, title:"MASH",          year:1970,genre:"Comedie",  rating:7.7,tmdb:1408,  desc:"Une unité chirurgicale de l'armée américaine survit à la guerre de Corée par l'humour."},
+  {id:330, title:"Patton",          year:1970,genre:"Guerre",  rating:7.9,tmdb:11590,  desc:"Portrait du général américain George Patton pendant la Seconde Guerre mondiale."},
+  {id:331, title:"Little Big Man",          year:1970,genre:"Action",  rating:7.6,tmdb:11055,  desc:"Un homme blanc élevé par les Cheyennes raconte sa vie extraordinaire à 121 ans."},
+  {id:332, title:"Catch-22",          year:1970,genre:"Comedie",  rating:7.1,tmdb:10782,  desc:"Un bombardier tente de se faire réformer pour folie dans l'armée américaine."},
+  {id:333, title:"Airport",          year:1970,genre:"Action",  rating:6.5,tmdb:11540,  desc:"Un avion de ligne est pris en otage par un passager désespéré."},
+  {id:334, title:"Love Story",          year:1970,genre:"Drame",  rating:6.9,tmdb:11778,  desc:"Une histoire d'amour tragique entre deux étudiants de milieux opposés."},
+  {id:335, title:"The Wild Bunch",          year:1969,genre:"Action",  rating:7.9,tmdb:8869,  desc:"Des hors-la-loi vieillissants tentent un dernier coup au Mexique."},
+  {id:336, title:"A Clockwork Orange",          year:1971,genre:"Sci-Fi",  rating:8.3,tmdb:185,  desc:"Dans un futur violent, un délinquant subit un conditionnement psychologique."},
+  {id:337, title:"Harold and Maude",          year:1971,genre:"Comedie",  rating:7.9,tmdb:43266,  desc:"Un jeune homme obsédé par la mort tombe amoureux d'une femme de 79 ans."},
+  {id:338, title:"Two-Lane Blacktop",          year:1971,genre:"Action",  rating:7.3,tmdb:11817,  desc:"Deux pilotes défient un étranger dans une course à travers l'Amérique."},
+  {id:339, title:"Sunday Bloody Sunday",          year:1971,genre:"Drame",  rating:7.3,tmdb:30143,  desc:"Un triangle amoureux entre un médecin, une consultante et un artiste à Londres."},
+  {id:340, title:"Carnal Knowledge",          year:1971,genre:"Drame",  rating:7.1,tmdb:29610,  desc:"Deux amis de fac poursuivent leurs relations amoureuses sur plusieurs décennies."},
+  {id:341, title:"The Go-Between",          year:1971,genre:"Drame",  rating:7.2,tmdb:36917,  desc:"Un garçon sert de messager entre deux amants de classes sociales différentes."},
+  {id:342, title:"Sleuth",          year:1972,genre:"Thriller",  rating:8.0,tmdb:10198,  desc:"Un écrivain de polars et le jeune amant de sa femme jouent un jeu dangereux."},
+  {id:343, title:"Last Tango in Paris",          year:1972,genre:"Drame",  rating:7.0,tmdb:3484,  desc:"Une liaison anonyme et torride entre un Américain et une jeune Française à Paris."},
+  {id:344, title:"Aguirre the Wrath of God",          year:1972,genre:"Drame",  rating:7.8,tmdb:799,  desc:"Un conquistador fou mène une expédition suicidaire dans la jungle amazonienne."},
+  {id:345, title:"Frenzy",          year:1972,genre:"Thriller",  rating:7.4,tmdb:10590,  desc:"Un tueur en série sévit à Londres sous les yeux d'un innocent accusé à sa place."},
+  {id:346, title:"Slaughterhouse-Five",          year:1972,genre:"Sci-Fi",  rating:7.2,tmdb:36249,  desc:"Un soldat américain voyage dans le temps entre la Seconde Guerre et une planète alien."},
+  {id:347, title:"Play It Again Sam",          year:1972,genre:"Comedie",  rating:7.5,tmdb:11979,  desc:"Un cinéphile maladroit imagine Humphrey Bogart lui donner des conseils amoureux."},
+  {id:348, title:"The Godfather Part II",          year:1974,genre:"Drame",  rating:9.0,tmdb:240,  desc:"La saga Corleone : ascension du jeune Vito et déclin de Michael."},
+  {id:349, title:"The Long Goodbye",          year:1973,genre:"Thriller",  rating:7.6,tmdb:9018,  desc:"Le détective Philip Marlowe enquête sur la mort de la femme de son ami."},
+  {id:350, title:"Save the Tiger",          year:1973,genre:"Drame",  rating:7.3,tmdb:37539,  desc:"Un homme d'affaires en crise morale envisage de brûler son usine pour l'assurance."},
+  {id:351, title:"The Day of the Jackal",          year:1973,genre:"Thriller",  rating:7.8,tmdb:9040,  desc:"Un tueur à gages est engagé pour assassiner le général de Gaulle."},
+  {id:352, title:"Papillon",          year:1973,genre:"Drame",  rating:8.0,tmdb:11633,  desc:"Un bagnard condamné injustement tente de s'évader du bagne de Guyane."},
+  {id:353, title:"High Plains Drifter",          year:1973,genre:"Action",  rating:7.4,tmdb:9300,  desc:"Un mystérieux étranger aide une ville à se défendre tout en se vengeant d'elle."},
+  {id:354, title:"Westworld",          year:1973,genre:"Sci-Fi",  rating:7.1,tmdb:11340,  desc:"Dans un parc à thème futuriste, les robots androïdes se retournent contre les visiteurs."},
+  {id:355, title:"The Wicker Man",          year:1973,genre:"Horreur",  rating:7.6,tmdb:11116,  desc:"Un policier enquête sur une disparition dans une île écossaise aux rites païens."},
+  {id:356, title:"Soylent Green",          year:1973,genre:"Sci-Fi",  rating:7.1,tmdb:10821,  desc:"Dans une New York surpeuplée de 2022, un détective découvre le secret de la nourriture synthétique."},
+  {id:357, title:"Young Frankenstein",          year:1974,genre:"Comedie",  rating:8.0,tmdb:11921,  desc:"Le petit-fils du docteur Frankenstein reprend les expériences de son ancêtre."},
+  {id:358, title:"Blazing Saddles",          year:1974,genre:"Comedie",  rating:7.7,tmdb:11803,  desc:"Un shérif noir est nommé dans une ville raciste de l'Ouest américain."},
+  {id:359, title:"The Texas Chain Saw Massacre",          year:1974,genre:"Horreur",  rating:7.4,tmdb:945,  desc:"Un groupe d'amis tombe sur une famille de cannibales au Texas."},
+  {id:360, title:"Lenny",          year:1974,genre:"Drame",  rating:7.5,tmdb:11540,  desc:"La vie tumultueuse et tragique du comédien provocateur Lenny Bruce."},
+  {id:361, title:"The Parallax View",          year:1974,genre:"Thriller",  rating:7.3,tmdb:9339,  desc:"Un journaliste infiltre une mystérieuse corporation qui forme des assassins."},
+  {id:362, title:"California Split",          year:1974,genre:"Drame",  rating:7.2,tmdb:19913,  desc:"Deux joueurs compulsifs traversent l'Amérique de casino en casino."},
+  {id:363, title:"Alice Doesnt Live Here Anymore",          year:1974,genre:"Drame",  rating:7.3,tmdb:11906,  desc:"Une veuve repart de zéro avec son fils en traversant l'Amérique."},
+  {id:364, title:"Barry Lyndon",          year:1975,genre:"Drame",  rating:8.1,tmdb:493,  desc:"L'ascension et la chute d'un aventurier irlandais dans l'Europe du XVIIIe siècle."},
+  {id:365, title:"Monty Python and the Holy Grail",          year:1975,genre:"Comedie",  rating:8.2,tmdb:762,  desc:"Le roi Arthur et ses chevaliers partent à la quête du Graal de manière absurde."},
+  {id:366, title:"Night Moves",          year:1975,genre:"Thriller",  rating:7.2,tmdb:27935,  desc:"Un détective privé cherche une adolescente disparue en Floride."},
+  {id:367, title:"Shampoo",          year:1975,genre:"Comedie",  rating:6.8,tmdb:11523,  desc:"Un coiffeur de Beverly Hills jongle entre ses clientes et ses ambitions."},
+  {id:368, title:"The Rocky Horror Picture Show",          year:1975,genre:"Comedie",  rating:7.4,tmdb:10539,  desc:"Un couple tombe sur le château d'un scientifique fou travesti."},
+  {id:369, title:"Picnic at Hanging Rock",          year:1975,genre:"Thriller",  rating:7.2,tmdb:9410,  desc:"Trois lycéennes australiennes disparaissent mystérieusement lors d'une excursion."},
+  {id:370, title:"Carrie",          year:1976,genre:"Horreur",  rating:7.4,tmdb:10099,  desc:"Une adolescente maltraitée découvre ses pouvoirs télékinésiques avec des conséquences sanglantes."},
+  {id:371, title:"The Killing of a Chinese Bookie",          year:1976,genre:"Drame",  rating:7.2,tmdb:53621,  desc:"Un patron de strip-club doit éliminer une cible pour rembourser ses dettes."},
+  {id:372, title:"Face to Face",          year:1976,genre:"Drame",  rating:8.1,tmdb:39176,  desc:"Une psychiatre suédoise sombre dans une dépression profonde."},
+  {id:373, title:"The Missouri Breaks",          year:1976,genre:"Action",  rating:6.8,tmdb:19637,  desc:"Un détective de l'Ouest traque un gang de voleurs de chevaux."},
+  {id:374, title:"Bound for Glory",          year:1976,genre:"Drame",  rating:7.5,tmdb:27338,  desc:"La vie de Woody Guthrie, chanteur folk légendaire, pendant la Grande Dépression."},
+  {id:375, title:"Saturday Night Fever",          year:1977,genre:"Drame",  rating:6.9,tmdb:11862,  desc:"Un jeune ouvrier de Brooklyn s'évade de sa vie terne grâce à la disco."},
+  {id:376, title:"The Spy Who Loved Me",          year:1977,genre:"Action",  rating:7.1,tmdb:699,  desc:"James Bond affronte un milliardaire fou qui veut déclencher une guerre nucléaire."},
+  {id:377, title:"New York New York",          year:1977,genre:"Drame",  rating:6.9,tmdb:35957,  desc:"Une chanteuse et un saxophoniste vivent une histoire d'amour tumultueuse dans l'après-guerre."},
+  {id:378, title:"3 Women",          year:1977,genre:"Thriller",  rating:7.7,tmdb:30669,  desc:"Deux femmes aux personnalités opposées se rapprochent dans un étrange complexe."},
+  {id:379, title:"The Goodbye Girl",          year:1977,genre:"Comedie",  rating:7.2,tmdb:16231,  desc:"Une danseuse partage son appartement avec un acteur ronchon, ils tombent amoureux."},
+  {id:380, title:"Slap Shot",          year:1977,genre:"Comedie",  rating:7.5,tmdb:10618,  desc:"Un entraîneur de hockey engage trois frères brutaux pour sauver son équipe en faillite."},
+  {id:381, title:"Julia",          year:1977,genre:"Drame",  rating:7.3,tmdb:17174,  desc:"Lillian Hellman aide son amie Julia à résister au nazisme en Autriche."},
+  {id:382, title:"Days of Heaven",          year:1978,genre:"Drame",  rating:7.8,tmdb:9512,  desc:"Des ouvriers agricoles vivent un drame passionnel dans les plaines du Texas."},
+  {id:383, title:"Interiors",          year:1978,genre:"Drame",  rating:7.3,tmdb:14786,  desc:"Trois soeurs sont perturbées par la séparation de leurs parents et le remariage du père."},
+  {id:384, title:"Invasion of the Body Snatchers",          year:1978,genre:"Sci-Fi",  rating:7.4,tmdb:9054,  desc:"Des habitants de San Francisco sont remplacés un à un par des copies extraterrestres."},
+  {id:385, title:"The China Syndrome",          year:1979,genre:"Thriller",  rating:7.3,tmdb:9379,  desc:"Une journaliste TV découvre une tentative d'étouffement d'un incident nucléaire."},
+  {id:386, title:"All That Jazz",          year:1979,genre:"Drame",  rating:7.7,tmdb:11893,  desc:"Un chorégraphe mène une vie autodestructrice entre travail, alcool et femmes."},
+  {id:387, title:"Mad Max",          year:1979,genre:"Action",  rating:6.9,tmdb:9659,  desc:"Dans un futur proche, un policier pourchasse un gang de motards meurtriers."},
+  {id:388, title:"Breaking Away",          year:1979,genre:"Drame",  rating:7.7,tmdb:17622,  desc:"Un jeune passionné de cyclisme affronte les étudiants d'une université locale."},
+  {id:389, title:"Life of Brian",          year:1979,genre:"Comedie",  rating:8.0,tmdb:583,  desc:"Un homme né le même jour que Jésus est pris à tort pour le Messie."},
+  {id:390, title:"10",          year:1979,genre:"Comedie",  rating:6.7,tmdb:15303,  desc:"Un compositeur en crise de la quarantaine s'obsède pour une femme qu'il juge parfaite."},
+  {id:391, title:"Stardust Memories",          year:1980,genre:"Comedie",  rating:7.6,tmdb:8203,  desc:"Un cinéaste célèbre est assailli par des fans lors d'un week-end de rétrospective."},
+  {id:392, title:"Friday the 13th",          year:1980,genre:"Horreur",  rating:6.4,tmdb:9378,  desc:"Des campeurs sont massacrés un par un dans un camp de vacances maudit."},
+  {id:393, title:"The Long Riders",          year:1980,genre:"Action",  rating:7.3,tmdb:16538,  desc:"L'histoire des frères James et Younger, hors-la-loi légendaires du Far West."},
+  {id:394, title:"Kagemusha",          year:1980,genre:"Drame",  rating:8.0,tmdb:11645,  desc:"Un voleur sosie remplace un seigneur de guerre japonais mourant."},
+  {id:395, title:"Flash Gordon",          year:1980,genre:"Sci-Fi",  rating:6.6,tmdb:13061,  desc:"Flash Gordon part sauver la Terre des griffes de l'impitoyable Ming."},
+  {id:396, title:"Altered States",          year:1980,genre:"Sci-Fi",  rating:7.1,tmdb:8908,  desc:"Un chercheur s'isole dans un caisson sensoriel et régresse vers un état primitif."},
+  {id:397, title:"Atlantic City",          year:1980,genre:"Drame",  rating:7.4,tmdb:9013,  desc:"Un vieux gangster et une jeune femme se lient dans un Atlantic City en mutation."},
+  {id:398, title:"The Fog",          year:1980,genre:"Horreur",  rating:6.8,tmdb:9375,  desc:"Un brouillard meurtrier envahit une ville côtière de Californie."},
+  {id:399, title:"Das Boot",          year:1981,genre:"Guerre",  rating:8.3,tmdb:387,  desc:"L'équipage d'un sous-marin allemand vit l'enfer de la Seconde Guerre mondiale."},
+  {id:400, title:"Reds",          year:1981,genre:"Drame",  rating:7.3,tmdb:14521,  desc:"Un journaliste américain couvre la révolution russe de 1917 et tombe amoureux."},
+  {id:401, title:"Chariots of Fire",          year:1981,genre:"Drame",  rating:7.2,tmdb:9443,  desc:"Deux sprinters britanniques s'affrontent aux Jeux Olympiques de 1924."},
+  {id:402, title:"My Dinner with Andre",          year:1981,genre:"Drame",  rating:7.7,tmdb:10391,  desc:"Deux amis échangent sur la vie, l'art et l'existence lors d'un dîner à New York."},
+  {id:403, title:"Time Bandits",          year:1981,genre:"Fantastique",  rating:7.4,tmdb:11978,  desc:"Un enfant voyage dans le temps avec des nains qui ont volé la carte du temps."},
+  {id:404, title:"Gallipoli",          year:1981,genre:"Guerre",  rating:7.7,tmdb:11908,  desc:"Deux jeunes Australiens s'engagent dans la Première Guerre mondiale avec foi et naïveté."},
+  {id:405, title:"Thief",          year:1981,genre:"Thriller",  rating:7.4,tmdb:11521,  desc:"Un cambrioleur professionnel tente de se ranger mais est forcé à travailler pour la mafia."},
+  {id:406, title:"Mephisto",          year:1981,genre:"Drame",  rating:7.8,tmdb:33680,  desc:"Un acteur opportuniste prospère sous le régime nazi en vendant son âme au système."},
+  {id:407, title:"Gandhi",          year:1982,genre:"Drame",  rating:8.0,tmdb:14534,  desc:"La vie du Mahatma Gandhi et son combat non-violent pour l'indépendance de l'Inde."},
+  {id:408, title:"Sophie's Choice",          year:1982,genre:"Drame",  rating:7.6,tmdb:9428,  desc:"Un écrivain découvre le terrible secret d'une survivante polonaise de la Shoah."},
+  {id:409, title:"The Verdict",          year:1982,genre:"Thriller",  rating:7.5,tmdb:13567,  desc:"Un avocat alcoolique relance sa carrière avec une affaire de négligence médicale."},
+  {id:410, title:"Fitzcarraldo",          year:1982,genre:"Drame",  rating:7.7,tmdb:11639,  desc:"Un excentrique tente de construire un opéra en Amazonie en faisant passer un bateau par une montagne."},
+  {id:411, title:"Missing",          year:1982,genre:"Thriller",  rating:7.5,tmdb:26567,  desc:"Un père américain cherche son fils disparu lors du coup d'État chilien de 1973."},
+  {id:412, title:"Conan the Barbarian",          year:1982,genre:"Action",  rating:6.9,tmdb:9387,  desc:"Un guerrier barbare se venge du sorcier qui a massacré son village."},
+  {id:413, title:"Creepshow",          year:1982,genre:"Horreur",  rating:7.0,tmdb:11581,  desc:"Cinq histoires d'horreur anthologiques dans le style des comics EC."},
+  {id:414, title:"Pink Floyd The Wall",          year:1982,genre:"Drame",  rating:8.0,tmdb:21198,  desc:"Une rock star s'isole du monde derrière un mur psychologique qu'il a construit lui-même."},
+  {id:415, title:"The World According to Garp",          year:1982,genre:"Drame",  rating:7.1,tmdb:11925,  desc:"La vie bizarre et tragique du fils d'une féministe iconoclaste."},
+  {id:416, title:"Local Hero",          year:1983,genre:"Comedie",  rating:7.6,tmdb:33338,  desc:"Un agent pétrolier américain est envoyé acheter un village écossais mais tombe sous son charme."},
+  {id:417, title:"Silkwood",          year:1983,genre:"Drame",  rating:7.2,tmdb:9464,  desc:"Une ouvrière du nucléaire découvre des irrégularités et lutte pour les dénoncer."},
+  {id:418, title:"Tender Mercies",          year:1983,genre:"Drame",  rating:7.2,tmdb:31549,  desc:"Un chanteur de country alcoolique retrouve la paix grâce à une veuve et son fils."},
+  {id:419, title:"Zelig",          year:1983,genre:"Comedie",  rating:7.6,tmdb:11979,  desc:"Un homme mystérieux a la capacité de prendre l'apparence de ceux qui l'entourent."},
+  {id:420, title:"The Dead Zone",          year:1983,genre:"Thriller",  rating:7.3,tmdb:11055,  desc:"Un homme sort du coma avec le don de voir l'avenir en touchant les gens."},
+  {id:421, title:"Rumble Fish",          year:1983,genre:"Drame",  rating:7.3,tmdb:13616,  desc:"Un adolescent admire son frère charismatique mais autodestructeur dans une ville industrielle."},
+  {id:422, title:"Christine",          year:1983,genre:"Horreur",  rating:6.8,tmdb:11543,  desc:"Une voiture de 1958 possédée transforme son propriétaire en monstre."},
+  {id:423, title:"Videodrome",          year:1983,genre:"Sci-Fi",  rating:7.2,tmdb:11830,  desc:"Un directeur de chaîne câblée est obsédé par une émission TV montrant de vraies tortures."},
+  {id:424, title:"Paris Texas",          year:1984,genre:"Drame",  rating:8.1,tmdb:11517,  desc:"Un homme perdu dans le désert retrouve son fils et tente de recoller les morceaux."},
+  {id:425, title:"Once Upon a Time in America",          year:1984,genre:"Drame",  rating:8.3,tmdb:769,  desc:"Des gangsters juifs new-yorkais vivent leur amitié de l'enfance à la vieillesse."},
+  {id:426, title:"The Natural",          year:1984,genre:"Drame",  rating:7.1,tmdb:8947,  desc:"Un joueur de baseball doué surgit de nulle part à 35 ans avec une batte magique."},
+  {id:427, title:"The Karate Kid",          year:1984,genre:"Action",  rating:7.3,tmdb:1885,  desc:"Un adolescent apprend le karaté auprès d'un vieux sage pour se défendre."},
+  {id:428, title:"Body Double",          year:1984,genre:"Thriller",  rating:7.0,tmdb:11513,  desc:"Un acteur au chômage est le témoin accidentel d'un meurtre dans L.A."},
+  {id:429, title:"Children of the Corn",          year:1984,genre:"Horreur",  rating:6.1,tmdb:9904,  desc:"Un couple tombe sur une ville où les enfants ont massacré tous les adultes."},
+  {id:430, title:"Ran",          year:1985,genre:"Guerre",  rating:8.2,tmdb:11645,  desc:"Un vieux seigneur de guerre japonais distribue son empire à ses fils avec des conséquences tragiques."},
+  {id:431, title:"Blood Simple",          year:1985,genre:"Thriller",  rating:7.6,tmdb:658,  desc:"Un mari jaloux engage un détective pour tuer sa femme infidèle, les choses dérivent."},
+  {id:432, title:"Silverado",          year:1985,genre:"Action",  rating:7.2,tmdb:9412,  desc:"Quatre cowboys s'allient pour défendre une ville contre un shérif corrompu."},
+  {id:433, title:"Kiss of the Spider Woman",          year:1985,genre:"Drame",  rating:7.5,tmdb:15861,  desc:"Un homosexuel et un militant politique partagent une cellule de prison au Brésil."},
+  {id:434, title:"Re-Animator",          year:1985,genre:"Horreur",  rating:7.2,tmdb:11542,  desc:"Un étudiant en médecine développe un sérum qui ramène les morts à la vie."},
+  {id:435, title:"Weird Science",          year:1985,genre:"Comedie",  rating:6.7,tmdb:11957,  desc:"Deux ados créent leur femme idéale sur ordinateur et elle prend vie."},
+  {id:436, title:"St. Elmos Fire",          year:1985,genre:"Drame",  rating:6.5,tmdb:14561,  desc:"Sept amis de fac affrontent les désillusions du monde adulte."},
+  {id:437, title:"Blue Velvet",          year:1986,genre:"Thriller",  rating:7.8,tmdb:475,  desc:"Un jeune homme découvre l'obscurité cachée derrière la tranquillité de sa ville."},
+  {id:438, title:"Aliens",          year:1986,genre:"Sci-Fi",  rating:8.3,tmdb:679,  desc:"Ripley retourne sur la planète infestée d'aliens avec un groupe de marines."},
+  {id:439, title:"Manhunter",          year:1986,genre:"Thriller",  rating:7.2,tmdb:10484,  desc:"Un profileur du FBI traque un tueur en série avec l'aide d'Hannibal Lecter."},
+  {id:440, title:"Mona Lisa",          year:1986,genre:"Thriller",  rating:7.5,tmdb:11808,  desc:"Un chauffeur ex-taulard s'attache à une call-girl qu'il conduit chaque soir à Londres."},
+  {id:441, title:"Salvador",          year:1986,genre:"Drame",  rating:7.5,tmdb:26566,  desc:"Un journaliste américain couvre la guerre civile au Salvador."},
+  {id:442, title:"At Close Range",          year:1986,genre:"Thriller",  rating:7.3,tmdb:28163,  desc:"Un adolescent est entraîné dans les crimes de son père gangster."},
+  {id:443, title:"Labyrinth",          year:1986,genre:"Fantastique",  rating:7.3,tmdb:11419,  desc:"Une adolescente doit traverser un labyrinthe magique pour sauver son petit frère."},
+  {id:444, title:"Highlander",          year:1986,genre:"Action",  rating:7.3,tmdb:11891,  desc:"Un Ecossais immortel affronte d'autres immortels à travers les siècles jusqu'à New York."},
+  {id:445, title:"Ruthless People",          year:1986,genre:"Comedie",  rating:7.1,tmdb:11928,  desc:"Un homme kidnappe la femme d'un homme d'affaires, mais son mari est ravi de s'en débarrasser."},
+  {id:446, title:"Empire of the Sun",          year:1987,genre:"Guerre",  rating:7.7,tmdb:10066,  desc:"Un enfant anglais survit seul dans la Chine occupée par les Japonais."},
+  {id:447, title:"Broadcast News",          year:1987,genre:"Comedie",  rating:7.3,tmdb:11922,  desc:"Un triangle amoureux dans les coulisses d'une chaîne de télévision."},
+  {id:448, title:"Raising Arizona",          year:1987,genre:"Comedie",  rating:7.6,tmdb:1427,  desc:"Un couple stérile kidnappe un bébé quintuplé, déclenchant une série de catastrophes."},
+  {id:449, title:"The Last Emperor",          year:1987,genre:"Drame",  rating:7.7,tmdb:11633,  desc:"La vie de Pu Yi, dernier empereur de Chine, de son enfance à la révolution communiste."},
+  {id:450, title:"RoboCop",          year:1987,genre:"Sci-Fi",  rating:7.5,tmdb:5548,  desc:"Un policier tué est ressuscité en cyborg pour nettoyer un Detroit futuriste."},
+  {id:451, title:"Spaceballs",          year:1987,genre:"Comedie",  rating:7.1,tmdb:15934,  desc:"Une parodie hilarante de Star Wars avec des extra-terrestres qui manquent d'air."},
+  {id:452, title:"The Witches of Eastwick",          year:1987,genre:"Fantastique",  rating:6.8,tmdb:11564,  desc:"Trois femmes évoquent accidentellement le diable dans leur petite ville."},
+  {id:453, title:"Barfly",          year:1987,genre:"Drame",  rating:7.4,tmdb:17654,  desc:"Un poète alcoolique et une femme déchue vivent leur passion dans les bars de Los Angeles."},
+  {id:454, title:"Angel Heart",          year:1987,genre:"Thriller",  rating:7.3,tmdb:11588,  desc:"Un détective enquête sur un chanteur disparu et plonge dans l'occultisme."},
+  {id:455, title:"Who Framed Roger Rabbit",          year:1988,genre:"Comedie",  rating:7.7,tmdb:8957,  desc:"Un détective alcoolique enquête sur un meurtre dans un monde où dessins animés et humains cohabitent."},
+  {id:456, title:"Beetlejuice",          year:1988,genre:"Comedie",  rating:7.5,tmdb:4011,  desc:"Un couple de fantômes fait appel à un exorciste de l'au-delà pour chasser les nouveaux habitants."},
+  {id:457, title:"The Last Temptation of Christ",          year:1988,genre:"Drame",  rating:7.1,tmdb:11600,  desc:"Une vision controversée de la vie de Jésus, tiraillé entre humanité et divinité."},
+  {id:458, title:"Gorillas in the Mist",          year:1988,genre:"Drame",  rating:7.2,tmdb:12101,  desc:"La vie de Dian Fossey, zoologiste qui a consacré sa vie à protéger les gorilles du Rwanda."},
+  {id:459, title:"Scrooged",          year:1988,genre:"Comedie",  rating:7.0,tmdb:11975,  desc:"Un producteur TV arrogant revit le Conte de Noël de Dickens."},
+  {id:460, title:"A Fish Called Wanda",          year:1988,genre:"Comedie",  rating:7.6,tmdb:11990,  desc:"Un gangster américain manipule un avocat britannique lors d'un braquage à Londres."},
+  {id:461, title:"Twins",          year:1988,genre:"Comedie",  rating:6.4,tmdb:9289,  desc:"Un géant parfait découvre qu'il a un frère jumeau raté et arnaqueur."},
+  {id:462, title:"Eight Men Out",          year:1988,genre:"Drame",  rating:7.3,tmdb:9479,  desc:"L'histoire des joueurs de baseball qui ont truqué la World Series de 1919."},
+  {id:463, title:"The Accused",          year:1988,genre:"Thriller",  rating:7.1,tmdb:11578,  desc:"Une femme victime d'un viol collectif lutte pour que ses agresseurs soient jugés."},
+  {id:464, title:"Young Guns",          year:1988,genre:"Action",  rating:6.9,tmdb:9402,  desc:"Le jeune Billy the Kid et sa bande hors-la-loi sèment la terreur dans le Nouveau-Mexique."},
+  {id:465, title:"The Abyss",          year:1989,genre:"Sci-Fi",  rating:7.5,tmdb:2756,  desc:"Une équipe de plongeurs découvre une forme de vie intelligente au fond de l'océan."},
+  {id:466, title:"Parenthood",          year:1989,genre:"Comedie",  rating:7.2,tmdb:11923,  desc:"Les tribulations d'une famille américaine à travers plusieurs générations et couples."},
+  {id:467, title:"National Lampoons Christmas",          year:1989,genre:"Comedie",  rating:7.6,tmdb:11983,  desc:"Clark Griswold veut organiser le Noël familial parfait, tout déraille."},
+  {id:468, title:"Drugstore Cowboy",          year:1989,genre:"Drame",  rating:7.5,tmdb:11968,  desc:"Un groupe de toxicomanes cambriolent des pharmacies pour financer leur addiction."},
+  {id:469, title:"Casualties of War",          year:1989,genre:"Guerre",  rating:7.3,tmdb:8958,  desc:"Au Vietnam, un soldat témoin d'un crime de guerre tente de dénoncer ses camarades."},
+  {id:470, title:"Major League",          year:1989,genre:"Comedie",  rating:7.1,tmdb:11990,  desc:"Une équipe de baseball catastrophique est assemblée exprès pour perdre."},
+  {id:471, title:"The Silence of the Lambs",          year:1991,genre:"Thriller",  rating:8.6,tmdb:274,  desc:"Une stagiaire du FBI consulte le cannibale Hannibal Lecter pour traquer un tueur."},
+  {id:472, title:"Millers Crossing",          year:1990,genre:"Thriller",  rating:7.7,tmdb:11565,  desc:"Un conseiller joue sur deux tableaux dans une guerre des gangs irlando-italienne."},
+  {id:473, title:"The Grifters",          year:1990,genre:"Thriller",  rating:7.4,tmdb:11571,  desc:"Trois arnaqueurs se retrouvent dans une spirale de trahisons et de manipulations."},
+  {id:474, title:"Misery",          year:1990,genre:"Thriller",  rating:7.8,tmdb:1700,  desc:"Un écrivain est retenu prisonnier par sa fan psychopathe après un accident de voiture."},
+  {id:475, title:"Jacobs Ladder",          year:1990,genre:"Thriller",  rating:7.5,tmdb:8413,  desc:"Un vétéran du Vietnam est hanté par des visions cauchemardesques de plus en plus réelles."},
+  {id:476, title:"Dick Tracy",          year:1990,genre:"Action",  rating:6.4,tmdb:11978,  desc:"Le détective Dick Tracy affronte le crime organisé dans une ville colorée des années 30."},
+  {id:477, title:"Tremors",          year:1990,genre:"Horreur",  rating:7.2,tmdb:8355,  desc:"Des habitants d'une ville désertique sont attaqués par des vers géants souterrains."},
+  {id:478, title:"Flatliners",          year:1990,genre:"Sci-Fi",  rating:6.6,tmdb:9331,  desc:"Des étudiants en médecine provoquent leur mort temporaire pour explorer l'au-delà."},
+  {id:479, title:"King of New York",          year:1990,genre:"Action",  rating:7.0,tmdb:14372,  desc:"Un baron de la drogue libéré de prison reprend son empire pour financer un hôpital."},
+  {id:480, title:"Presumed Innocent",          year:1990,genre:"Thriller",  rating:7.0,tmdb:11527,  desc:"Un procureur est accusé du meurtre de sa collègue avec qui il avait une liaison."},
+  {id:481, title:"Mo Better Blues",          year:1990,genre:"Drame",  rating:6.7,tmdb:15763,  desc:"Un trompettiste de jazz obsédé par son art néglige ses proches."},
+
+    // ── ANNÉES 2000 ──
   {id:55, title:"Gladiator",               year:2000,genre:"Action",   rating:8.5,tmdb:98,    desc:"Un général romain est réduit en esclavage et devient gladiateur."},
   {id:56, title:"Memento",                 year:2000,genre:"Thriller", rating:8.4,tmdb:77,    desc:"Un homme sans mémoire à court terme cherche l'assassin de sa femme."},
   {id:57, title:"Cast Away",               year:2000,genre:"Drame",    rating:7.8,tmdb:2662,  desc:"Un homme survit seul sur une île déserte pendant 4 ans."},
@@ -371,14 +527,16 @@ const EMOJI={Action:"💥",Drame:"🎭",Thriller:"🔪",Horreur:"👻",Fantastiq
 const COLORS={Action:"#e74c3c",Drame:"#8e44ad",Thriller:"#c0392b",Horreur:"#546e7a",Fantastique:"#2980b9",Comedie:"#f39c12","Sci-Fi":"#16a085",Guerre:"#7f8c8d","Années 70":"#d4a017","Années 80":"#e91e8c","Années 90":"#00bcd4","Années 2000":"#4caf50","Années 2010":"#9c27b0","Années 2020":"#f5c518"};
 
 const posterCache={};
-async function getPoster(tmdbId){
-  if(posterCache[tmdbId]!==undefined) return posterCache[tmdbId];
+async function getPoster(tmdbId,title,year){
+  const key=title+'_'+year;
+  if(posterCache[key]!==undefined) return posterCache[key];
   try{
-    const r=await fetch(`https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${TMDB_KEY}&language=fr-FR`);
+    const r=await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(title)}&year=${year}&language=fr-FR`);
     const d=await r.json();
-    posterCache[tmdbId]=d.poster_path?IMG+d.poster_path:null;
-  }catch{posterCache[tmdbId]=null;}
-  return posterCache[tmdbId];
+    const film=d.results?.[0];
+    posterCache[key]=film?.poster_path?IMG+film.poster_path:null;
+  }catch{posterCache[key]=null;}
+  return posterCache[key];
 }
 
 let activeTab="Tous", search="";
@@ -405,7 +563,7 @@ function createCard(m){
   const t=document.createElement('div');t.className='ft';t.textContent=m.title;
   const y=document.createElement('div');y.className='fy';y.textContent=m.year;
   wrap.append(ph,t,y);
-  getPoster(m.tmdb).then(url=>{
+  getPoster(m.tmdb,m.title,m.year).then(url=>{
     if(url){const img=new Image();img.className='pi';img.src=url;img.alt=m.title;img.onload=()=>ph.replaceWith(img);img.onerror=()=>{ph.classList.remove('sh');ph.textContent=EMOJI[m.genre]||'🎬';};}
     else{ph.classList.remove('sh');ph.textContent=EMOJI[m.genre]||'🎬';}
   });
@@ -491,7 +649,7 @@ window.openMovie=async function(id){
   document.getElementById('mm')?.remove();
   const el=document.createElement('div');el.id='mm';
   el.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:200;display:flex;align-items:flex-end;';
-  const url=await getPoster(m.tmdb);
+  const url=await getPoster(m.tmdb,m.title,m.year);
   const ph=url?`<img src="${url}" style="width:100px;height:140px;border-radius:12px;object-fit:cover;box-shadow:0 4px 20px rgba(0,0,0,0.7);flex-shrink:0;">`
     :`<div style="width:100px;height:140px;border-radius:12px;background:linear-gradient(160deg,${COLORS[m.genre]||'#333'}88,#111);display:flex;align-items:center;justify-content:center;font-size:40px;flex-shrink:0;">${EMOJI[m.genre]||'🎬'}</div>`;
   el.innerHTML=`<div style="background:#141414;width:100%;max-width:430px;margin:0 auto;border-radius:24px 24px 0 0;overflow:hidden;max-height:92vh;overflow-y:auto;">
