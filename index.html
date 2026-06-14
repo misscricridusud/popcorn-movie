@@ -1004,6 +1004,9 @@ async function getPoster(tmdbId,title,year){
 
 let activeTab="Tous", search="";
 function lbl(g){return LABELS[g]||g;}
+function watchUrl(m){
+  return 'https://www.google.com/search?q='+encodeURIComponent(m.title+' '+m.year+' film où le voir streaming France');
+}
 
 function getMovies(tab){
   return MOVIES.filter(m=>{
@@ -1127,11 +1130,13 @@ window.openMovie=async function(id){
     </div>
     <div style="padding:20px 22px 36px;">
       <div style="color:#aaa;font-size:14px;line-height:1.7;">${m.desc}</div>
-      <button id="cb" style="margin-top:24px;width:100%;background:#f5c518;color:#000;border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;">Fermer</button>
+      <a id="wb" href="${watchUrl(m)}" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin-top:22px;width:100%;background:#f5c518;color:#000;border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:900;cursor:pointer;">🔎 Où le voir ?</a>
+      <button id="cb" style="margin-top:10px;width:100%;background:#242424;color:#aaa;border:1px solid #333;border-radius:14px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;">Fermer</button>
     </div>
   </div>`;
   document.body.appendChild(el);
   el.onclick=()=>el.remove();
+  document.getElementById('wb').onclick=e=>e.stopPropagation();
   document.getElementById('cb').onclick=e=>{e.stopPropagation();el.remove();};
 };
 
