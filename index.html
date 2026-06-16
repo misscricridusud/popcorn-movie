@@ -1095,12 +1095,17 @@ const COLORS={Action:"#e74c3c",Drame:"#8e44ad",Thriller:"#c0392b",Horreur:"#546e
 
 const posterCache={};
 async function getPoster(tmdbId,title,year){
-  const key=title+'_'+year;
+  const key=tmdbId||title+'_'+year;
   if(posterCache[key]!==undefined) return posterCache[key];
   try{
-    const r=await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(title)}&year=${year}&language=fr-FR`);
-    const d=await r.json();
-    const film=d.results?.[0];
+    if(tmdbId){
+      const r=await fetch(`https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${TMDB_KEY}&language=fr-FR`);
+      const d=await r.json();
+      if(d.poster_path){posterCache[key]=IMG+d.poster_path;return posterCache[key];}
+    }
+    const r2=await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(title)}&year=${year}&language=fr-FR`);
+    const d2=await r2.json();
+    const film=d2.results?.[0];
     posterCache[key]=film?.poster_path?IMG+film.poster_path:null;
   }catch{posterCache[key]=null;}
   return posterCache[key];
